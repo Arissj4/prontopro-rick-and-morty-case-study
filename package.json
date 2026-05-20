@@ -1,0 +1,29 @@
+{
+	"name": "rick-and-morty-web",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"build": "next build",
+		"dev": "next dev",
+		"format": "echo \"You should setup a formatter first. =)\"",
+		"lint": "echo \"You should setup a linter first. =)\"",
+		"start": "next start",
+		"test": "echo \"You should setup a test runner first. =)\"",
+		"typecheck": "tsc"
+	},
+	"dependencies": {
+		"next": "15.3.5",
+		"react": "19.1.0",
+		"react-dom": "19.1.0"
+	},
+	"devDependencies": {
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.3.0",
+		"@types/node": "24.0.10",
+		"@types/react": "19.1.8",
+		"@types/react-dom": "19.1.6",
+		"typescript": "5.8.3"
+	},
+	"packageManager": "yarn@4.9.2"
+}
