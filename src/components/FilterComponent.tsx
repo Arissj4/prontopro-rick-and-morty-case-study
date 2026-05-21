@@ -1,8 +1,48 @@
 import Image from "next/image"
 import Magnifier from "@/public/magnifier.svg"
 import FilterIcon from "@/public/filter.svg"
+import { Character } from "@/lib/costumeTypes"
 
-export default function Filter({advancedButton}: {advancedButton: boolean}) {
+
+type FilterProps = {
+  initURL: string,
+  nextPage: string | null,
+  setData: React.Dispatch<React.SetStateAction<Character[]>>,
+  setNextPage: React.Dispatch<React.SetStateAction<string | null>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  advancedButton: boolean
+}
+
+export default function Filter({initURL, nextPage, setData, setNextPage, setIsLoading, advancedButton}: FilterProps) {
+
+  const filterData = async (searchedName: string) => {
+
+    try{
+      setIsLoading(true);
+      document.body.style.overflow = "hidden";
+
+      const res = await fetch(`${initURL}/?name=${searchedName.toLowerCase()}`);
+      const data = await res.json();
+      console.log(data)
+      if (data.results) {
+        setData(data.results);
+      } else {
+        setData([]);
+      }
+      if (data.info) {
+        setNextPage(data.info.next);
+      } else {
+        setNextPage(null);
+      }
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      document.body.style.overflow = "";
+    }
+  }
+
   return(
     <>
       <div className="filter-container w-full">
@@ -13,16 +53,18 @@ export default function Filter({advancedButton}: {advancedButton: boolean}) {
             type="text"
             placeholder="Filter by name..."
             name="name"
-            onChange={() => {}}
+            onChange={(e) => {filterData(e.target.value)}}
           />
         </div>
 
-        <button className="filter-button">
-          <Image src={FilterIcon} alt="Filter icon" width={24} height={24}/>
-          <p>
-            advanced filters
-          </p>
-        </button>
+        {advancedButton && (
+          <button className="filter-button">
+            <Image src={FilterIcon} alt="Filter icon" width={24} height={24}/>
+            <p>
+              advanced filters
+            </p>
+          </button>
+        )}
       </div>
     </>
   )

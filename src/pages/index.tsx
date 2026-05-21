@@ -29,15 +29,23 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandMPicture} alt="Rick and Morty Logo" />
 
-				<Filter advancedButton={true}/>
+				<Filter initURL={'https://rickandmortyapi.com/api/character'} nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading} advancedButton={true}/>
 
 				<section className="w-full flex flex-col items-center">
-					{characters.map(character => (
-						<CharacterComponent character={character} key={character.id} />
-					))}
+					{characters ?
+						(characters?.map(character => (
+							<CharacterComponent character={character} key={character.id} />
+						)))
+					:
+						<div>
+							No characters found.
+						</div>
+					}
 				</section>
 
-				<Pagination nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
+				{characters && nextPage && (
+					<Pagination nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
+				)}
 			</div>
 		</>
 	)
