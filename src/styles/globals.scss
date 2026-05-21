@@ -17,7 +17,6 @@ $button-bg-color: #E3F2FD;
   }
 }
 
-
 .filter-container{
   width: 100%;
   position: sticky;
@@ -43,36 +42,88 @@ $button-bg-color: #E3F2FD;
       }
     }
   }
+}
 
+.filter-dialog{
 
-  .filter-button{
-    width: 100%;
-    height: 56px;
-    margin-top: 16px;
-    display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 24px;
+
+  &__content-wrapper{
+    min-height: 100px;
+    background-color: white;
+    margin-top: 80px;
     padding: 16px;
-    background-color: $button-bg-color;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 2px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+  }
 
-    &:hover{
-      cursor: pointer;
-    }
-
-    img{
-      opacity: 0.54;
-    }
+  &__header{
+    display: flex;
+    justify-content: space-between;
 
     p{
-      position: relative;
-      left: -12px;
-      width: 100%;
+      font-size: 20px;
       font-weight: 500;
-      font-size: 16px;
-      text-align: center;
-      text-transform: uppercase;
-      color: $button-text-color;
     }
+
+    button:hover{
+      cursor: pointer;
+    }
+  }
+
+  &__content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__select-wrapper{
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  &__select{
+    width: 100%;
+
+    &:focus-visible{
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__footer{
+    margin-top: 8px;
+  }
+}
+
+.filter-button{
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  background-color: $button-bg-color;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  img{
+    opacity: 0.54;
+  }
+
+  p{
+    position: relative;
+    width: 100%;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    color: $button-text-color;
   }
 }
 
