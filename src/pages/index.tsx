@@ -32,18 +32,18 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				<Filter initURL={'https://rickandmortyapi.com/api/character'} nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading} advancedButton={true}/>
 
 				<section className="w-full flex flex-col items-center">
-					{characters ?
+					{characters.length > 0 ?
 						(characters?.map(character => (
 							<CharacterComponent character={character} key={character.id} />
 						)))
 					:
-						<div>
+						<div className="text-[18px] font-medium">
 							No characters found.
 						</div>
 					}
 				</section>
 
-				{characters && nextPage && (
+				{characters.length > 0 && nextPage && (
 					<Pagination nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
 				)}
 			</div>

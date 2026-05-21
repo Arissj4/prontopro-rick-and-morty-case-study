@@ -23,7 +23,6 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
 
       const res = await fetch(`${initURL}/?name=${searchedName.toLowerCase()}`);
       const data = await res.json();
-      console.log(data)
       if (data.results) {
         setData(data.results);
       } else {
