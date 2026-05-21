@@ -3,6 +3,7 @@ import Image from "next/image"
 import Filter from "@/components/FilterComponent"
 import type { Character } from "@/lib/costumeTypes"
 import CharacterComponent from "@/components/CharacterComponent"
+import Pagination from "@/components/PaginationComponents"
 
 type HomeProps = {
 	characters: Character[];
@@ -22,6 +23,7 @@ const Home = ({ characters }: HomeProps) => {
 					))}
 				</section>
 
+				<Pagination />
 			</div>
 		</>
 	)
