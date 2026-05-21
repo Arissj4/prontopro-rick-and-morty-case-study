@@ -7,9 +7,10 @@ import Pagination from "@/components/PaginationComponents"
 import { GetServerSideProps } from "next"
 import { useState } from "react"
 
+
 type HomeProps = {
 	initCharacters: Character[],
-	initNextPage: string
+	initNextPage: string,
 }
 
 const Home = ({ initCharacters, initNextPage }: HomeProps) => {
@@ -17,6 +18,27 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 	const [characters, setCharacters] = useState<Character[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const [filters, setFilters] = useState<Record<string, Set<string>>>({'species': new Set(), 'gender': new Set(), status: new Set()});
+
+	const getFilters = async () => {
+
+    let url: string | null = 'https://rickandmortyapi.com/api/character';
+
+    while (url) {
+      const res:Response = await fetch(url);
+      const data = await res.json();
+
+      data.results.forEach((element: Character) => {
+				['species', 'gender', 'status'].forEach(filter => {
+					filters[filter].add(element[filter as keyof Character] as string);
+				})
+      });
+
+      url = data.info.next;
+    }
+		setFilters(filters);
+  }
 
 	return (
 		<>
@@ -29,7 +51,16 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandMPicture} alt="Rick and Morty Logo" />
 
-				<Filter initURL={'https://rickandmortyapi.com/api/character'} nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading} advancedButton={true}/>
+				<Filter
+					initURL={'https://rickandmortyapi.com/api/character'}
+					nextPage={nextPage}
+					setData={setCharacters}
+					setNextPage={setNextPage}
+					setIsLoading={setIsLoading}
+					advancedButton={true}
+					filters={filters}
+					getFilter={getFilters}
+				/>
 
 				<section className="w-full flex flex-col items-center">
 					{characters.length > 0 ?
@@ -51,7 +82,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<HomeProps>= async () => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 
 	const res = await fetch(`https://rickandmortyapi.com/api/character`);
 

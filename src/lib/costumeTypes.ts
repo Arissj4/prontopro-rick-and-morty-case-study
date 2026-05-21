@@ -13,4 +13,12 @@ type Character = {
   created: string,
 }
 
-export type { Character }
+type Location = {
+
+}
+
+type Episode = {
+
+}
+
+export type { Character, Location, Episode }
