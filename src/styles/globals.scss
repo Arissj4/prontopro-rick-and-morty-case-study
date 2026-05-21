@@ -112,6 +112,9 @@ $button-bg-color: #E3F2FD;
 .pagination-button{
   width: 150px;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: $button-bg-color;
   color: $button-text-color;
   border: none;

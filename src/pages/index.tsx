@@ -4,15 +4,29 @@ import Filter from "@/components/FilterComponent"
 import type { Character } from "@/lib/costumeTypes"
 import CharacterComponent from "@/components/CharacterComponent"
 import Pagination from "@/components/PaginationComponents"
+import { GetServerSideProps } from "next"
+import { useState } from "react"
 
 type HomeProps = {
-	characters: Character[];
+	initCharacters: Character[],
+	initNextPage: string
 }
 
-const Home = ({ characters }: HomeProps) => {
+const Home = ({ initCharacters, initNextPage }: HomeProps) => {
+
+	const [characters, setCharacters] = useState<Character[]>(initCharacters);
+	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	return (
 		<>
-			<div className='page flex flex-col items-center'>
+			{isLoading && (
+				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
+					Loading...
+				</div>
+			)}
+
+			<div className={`page flex flex-col items-center`}>
 				<Image src={RandMPicture} alt="Rick and Morty Logo" />
 
 				<Filter advancedButton={true}/>
@@ -23,21 +37,22 @@ const Home = ({ characters }: HomeProps) => {
 					))}
 				</section>
 
-				<Pagination />
+				<Pagination data={characters} nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
 			</div>
 		</>
 	)
 }
 
-export async function getServerSideProps () {
+export const getServerSideProps: GetServerSideProps<HomeProps>= async () => {
 
-	const res = await fetch("https://rickandmortyapi.com/api/character");
+	const res = await fetch(`https://rickandmortyapi.com/api/character`);
 
 	const data = await res.json();
 
 	return {
 		props: {
-			characters: data.results,
+			initCharacters: data.results,
+			initNextPage: data.info.next,
 		}
 	}
 }
