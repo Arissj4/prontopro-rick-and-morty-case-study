@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import '@/styles/globals.css'
-import Navbar from '../components/navbar'
+import '@/styles/globals.scss'
+import Navbar from '../components/NavbarComponent'
 
 const App = ({ Component, pageProps }: AppProps) => {
   return(
