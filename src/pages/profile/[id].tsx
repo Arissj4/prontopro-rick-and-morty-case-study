@@ -1,20 +1,26 @@
-import { Character } from "@/lib/costumeTypes";
+import { Character, Episode } from "@/lib/costumeTypes";
 import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image"
 import Link from "next/link";
 import Back from "@/public/back.svg"
+import Right from "@/public/right.svg"
 
 type ProfileProps = {
-  data: Character
+  data: Character,
+  episodesData: Episode[]
 }
 
-export default function Profile({ data }: ProfileProps){
-  const [profile, setProfile] = useState<Character>(data);
+export default function Profile({ data, episodesData }: ProfileProps){
+  const [profile, setProfile] = useState<Character>(data)
+  const [episodes, setEpisodes] = useState<Episode[]>(episodesData);
 
   useEffect(() => {
     console.log(profile)
   },[profile])
+  useEffect(() => {
+    console.log(episodes)
+  },[episodes])
   return(
     <>
       <div className="p-4">
@@ -73,12 +79,33 @@ export default function Profile({ data }: ProfileProps){
               <span className="userinfo-container__content__item__value">{profile.type}</span>
             </div>
 
-            <div className="userinfo-container__content__item">
-              <span className="userinfo-container__content__item__label">Location</span>
-              <span className="userinfo-container__content__item__value">{profile.location.name}</span>
-            </div>
+            <Link href={`/location/${profile.location.url.split('/').pop()}`} className="userinfo-container__content__link">
+              <div className="flex flex-col flex-1">
+                <span className="userinfo-container__content__item__label">Location</span>
+                <span className="userinfo-container__content__item__value">{profile.location.name}</span>
+              </div>
+              <Image className="flex" src={Right} alt="forward" width={24} height={24} />
+            </Link>
           </div>
+        </section>
 
+        <section className="userinfo-container">
+          <h2 className="userinfo-container__title">
+            Episodes
+          </h2>
+
+          <div className="userinfo-container__content">
+            {episodes.map(episode => (
+              <Link href={`/episode/${episode.id}`} className="userinfo-container__content__link">
+                <div className="flex flex-col flex-1">
+                  <span className="userinfo-container__content__item__label">{episode.episode}</span>
+                  <span className="userinfo-container__content__item__value">{episode.name}</span>
+                  <span className="userinfo-container__content__item__date">{episode.air_date}</span>
+                </div>
+                <Image className="flex" src={Right} alt="forward" width={24} height={24} />
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </>
@@ -90,9 +117,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(`https://rickandmortyapi.com/api/character/${context.query.id}`)
   const data = await res.json()
 
+
+  const episodesQueryIds = data.episode.map((episode: string) => episode.split('/').pop());
+  const query: string = episodesQueryIds.join();
+  const episodesRes = await fetch(`https://rickandmortyapi.com/api/episode/${query}`)
+  const episodesData = await episodesRes.json()
   return {
     props: {
-      data: data
+      data,
+      episodesData
     }
   }
 }

@@ -215,8 +215,28 @@ $button-bg-color: #E3F2FD;
         color: #6E798C;
       }
 
+      &__date{
+        font-size: 14px;
+        font-weight: 500;
+        color: #8E8E93;
+        margin-bottom: 8px;
+      }
+
       span{
         display: block;
+      }
+    }
+
+    &__link{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 64px;
+      height: fit-content;
+      border-bottom: 1px solid #21212114;
+
+      img{
+        height: 24px;
       }
     }
   }
