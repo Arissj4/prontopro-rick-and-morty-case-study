@@ -37,7 +37,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 					))}
 				</section>
 
-				<Pagination data={characters} nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
+				<Pagination nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
 			</div>
 		</>
 	)
