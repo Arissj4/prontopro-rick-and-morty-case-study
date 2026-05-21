@@ -20,14 +20,26 @@ type FilterProps = {
 export default function Filter({initURL, nextPage, setData, setNextPage, setIsLoading, advancedButton, getFilter, filters}: FilterProps) {
 
   const [filterDialogVisible, setFilterDialogVisible] = useState<boolean>(false);
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
+  const [filterName, setFilterName] = useState<string>();
 
-  const filterData = async (searchedName: string) => {
+  const filterData = async (searchedName: string | undefined) => {
 
     try{
       setIsLoading(true);
+      setFilterName(searchedName);
       document.body.style.overflow = "hidden";
 
-      const res = await fetch(`${initURL}/?name=${searchedName.toLowerCase()}`);
+      let url = `${initURL}/`;
+      if(searchedName) url += `?name=${searchedName.toLowerCase()}`
+      Object.entries(selectedFilters).forEach(([key, value]) => {
+        value ? url += `&${key}=${value}` : null;
+      })
+
+      setSelectedFilters({});
+      setFilterDialogVisible(false);
+
+      const res = await fetch(url);
       const data = await res.json();
       if (data.results) {
         setData(data.results);
@@ -50,7 +62,7 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
 
   return(
     <>
-      <FilterDialog isVisible={filterDialogVisible} setVisible={setFilterDialogVisible} filter={filters}/>
+      <FilterDialog isVisible={filterDialogVisible} setVisible={setFilterDialogVisible} filter={filters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} filterData={filterData} filterName={filterName}/>
       <div className="filter-container w-full">
         <div className="filter-container__input-wrapper">
           <Image src={MagnifierIcon} alt="Magnifying glass icon" width={20} height={20}/>
@@ -87,9 +99,13 @@ type FilterDialogProps = {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   isVisible: boolean,
   filter: Record<string, Set<string>>
+  selectedFilters: Record<string, string>,
+  setSelectedFilters: React.Dispatch<React.SetStateAction<Record<string, string>>>,
+  filterData: (searchedName: string | undefined) => void,
+  filterName: string | undefined
 }
 
-export function FilterDialog({ isVisible, setVisible, filter }: FilterDialogProps) {
+export function FilterDialog({ isVisible, setVisible, filter, selectedFilters, setSelectedFilters, filterData, filterName }: FilterDialogProps) {
   return (
     <div className={`
       filter-dialog
@@ -115,8 +131,19 @@ export function FilterDialog({ isVisible, setVisible, filter }: FilterDialogProp
           className="filter-dialog__content"
         >
           {Object.entries(filter).map(filter => (
-            <div className="filter-dialog__select-wrapper">
-              <select className="filter-dialog__select" key={filter[0]}>
+            <div
+              className="filter-dialog__select-wrapper"
+              key={filter[0]}
+              id={filter[0]}
+            >
+              <select
+                className="filter-dialog__select"
+                id={filter[0]}
+                key={filter[0]}
+                value={selectedFilters[filter[0]] || ""}
+                onChange={(e) => setSelectedFilters({...selectedFilters, [filter[0]]: e.target.value})}
+              >
+                <option value="" disabled hidden>{filter[0].charAt(0).toUpperCase() + filter[0].slice(1)}</option>
                 {Array.from(filter[1]).map(it => (
                   <option key={it} id={it} value={it} label={it} />
                 ))}
@@ -130,7 +157,9 @@ export function FilterDialog({ isVisible, setVisible, filter }: FilterDialogProp
         >
           <button
             className="filter-dialog__button filter-button py-1 px-4"
-            onClick={() => {}}
+            onClick={() => {
+              filterData(filterName);
+            }}
           >
             <p className="text-[20px]">
               apply
