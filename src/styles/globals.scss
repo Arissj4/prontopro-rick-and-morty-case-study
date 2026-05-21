@@ -183,3 +183,41 @@ $button-bg-color: #E3F2FD;
     cursor: pointer;
   }
 }
+
+.userinfo-container{
+  &__title{
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 32px;
+    color: #8E8E93;
+  }
+
+  &__content{
+    margin-top: 16px;
+    padding-left: 16px;
+
+    &__item{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 64px;
+      border-bottom: 1px solid #21212114;
+
+      &__label{
+        font-size: 20px;
+        font-weight: 500;
+        color: #081F32;
+      }
+
+      &__value{
+        font-size: 14px;
+        font-weight: 500;
+        color: #6E798C;
+      }
+
+      span{
+        display: block;
+      }
+    }
+  }
+}
