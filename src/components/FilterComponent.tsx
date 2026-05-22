@@ -6,17 +6,18 @@ import { useState } from "react"
 
 
 type FilterProps = {
+  searchPlaceholder?: string,
   initURL: string,
   nextPage: string | null,
   setData: React.Dispatch<React.SetStateAction<any[]>>,
   setNextPage: React.Dispatch<React.SetStateAction<string | null>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   advancedButton: boolean,
-  filters: Record<string, Set<string>>,
-  getFilter: () => void
+  filters?: Record<string, Set<string>>,
+  getFilter?: () => void
 }
 
-export default function Filter({initURL, nextPage, setData, setNextPage, setIsLoading, advancedButton, getFilter, filters}: FilterProps) {
+export default function Filter({searchPlaceholder, initURL, nextPage, setData, setNextPage, setIsLoading, advancedButton, getFilter, filters}: FilterProps) {
 
   const [filterDialogVisible, setFilterDialogVisible] = useState<boolean>(false);
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
@@ -29,11 +30,24 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
       setFilterName(searchedName);
       document.body.style.overflow = "hidden";
 
-      let url = `${initURL}/`;
-      if(searchedName) url += `?name=${searchedName.toLowerCase()}`
-      Object.entries(selectedFilters).forEach(([key, value]) => {
-        value ? url += `&${key}=${value}` : null;
-      })
+      let url:string = "";
+
+      if(initURL.split("/").find((element) => element === "episode")) {
+        const isEpisodeCode = searchedName ? /^s\d{2}e\d{2}$/i.test(searchedName) : null;
+        const params = new URLSearchParams();
+        if (searchedName) {
+          if (isEpisodeCode) params.set("episode", searchedName.toUpperCase());
+          else params.set("name", searchedName.toLowerCase());
+        }
+        url = `${initURL}/?${params.toString()}`;
+      } else {
+        url = `${initURL}/`;
+        if(searchedName) url += `?name=${searchedName.toLowerCase()}`
+        Object.entries(selectedFilters).forEach(([key, value]) => {
+          value ? url += `&${key}=${value}` : null;
+        })
+      }
+
 
       setSelectedFilters({});
       setFilterDialogVisible(false);
@@ -69,7 +83,7 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
           <input
             className="filter-container__input"
             type="text"
-            placeholder="Filter by name..."
+            placeholder={searchPlaceholder ? searchPlaceholder : "Filter by name..."}
             name="name"
             onChange={(e) => {filterData(e.target.value)}}
           />
@@ -79,7 +93,7 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
           <button
             className="filter-button h-14 p-4"
             onClick={async () => {
-              await getFilter();
+              if(getFilter) await getFilter();
               setFilterDialogVisible(true);
             }}
           >
@@ -98,7 +112,7 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
 type FilterDialogProps = {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   isVisible: boolean,
-  filter: Record<string, Set<string>>
+  filter?: Record<string, Set<string>>
   selectedFilters: Record<string, string>,
   setSelectedFilters: React.Dispatch<React.SetStateAction<Record<string, string>>>,
   filterData: (searchedName: string | undefined) => void,
@@ -126,7 +140,7 @@ export function FilterDialog({ isVisible, setVisible, filter, selectedFilters, s
         <div
           className="filter-dialog__content"
         >
-          {Object.entries(filter).map(filter => (
+          {filter && Object.entries(filter).map(filter => (
             <div
               className="filter-dialog__select-wrapper"
               key={filter[0]}
