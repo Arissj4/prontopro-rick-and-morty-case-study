@@ -1,44 +1,45 @@
-import RandMPicture from "@/public/rick-and-morty.svg"
-import Image from "next/image"
-import Filter from "@/components/FilterComponent"
-import type { RMCharacter } from "@/lib/costumeTypes"
-import CharacterComponent from "@/components/CharacterComponent"
-import Pagination from "@/components/PaginationComponents"
-import { GetServerSideProps } from "next"
-import { useState } from "react"
-
+import RandMPicture from "@/public/rick-and-morty.svg";
+import Image from "next/image";
+import Filter from "@/components/FilterComponent";
+import type { RMCharacter } from "@/lib/costumeTypes";
+import CharacterComponent from "@/components/CharacterComponent";
+import Pagination from "@/components/PaginationComponents";
+import { GetServerSideProps } from "next";
+import { useState } from "react";
 
 type HomeProps = {
-	initCharacters: RMCharacter[],
-	initNextPage: string,
-}
+	initCharacters: RMCharacter[];
+	initNextPage: string;
+};
 
 const Home = ({ initCharacters, initNextPage }: HomeProps) => {
-
 	const [characters, setCharacters] = useState<RMCharacter[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const [filters, setFilters] = useState<Record<string, Set<string>>>({'species': new Set(), 'gender': new Set(), status: new Set()});
+	const [filters, setFilters] = useState<Record<string, Set<string>>>({
+		species: new Set(),
+		gender: new Set(),
+		status: new Set(),
+	});
 
 	const getFilters = async () => {
+		let url: string | null = "https://rickandmortyapi.com/api/character";
 
-    let url: string | null = 'https://rickandmortyapi.com/api/character';
+		while (url) {
+			const res: Response = await fetch(url);
+			const data = await res.json();
 
-    while (url) {
-      const res:Response = await fetch(url);
-      const data = await res.json();
-
-      data.results.forEach((element: RMCharacter) => {
-				['species', 'gender', 'status'].forEach(filter => {
+			data.results.forEach((element: RMCharacter) => {
+				["species", "gender", "status"].forEach((filter) => {
 					filters[filter].add(element[filter as keyof RMCharacter] as string);
-				})
-      });
+				});
+			});
 
-      url = data.info.next;
-    }
+			url = data.info.next;
+		}
 		setFilters(filters);
-  }
+	};
 
 	return (
 		<>
@@ -52,7 +53,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				<Image src={RandMPicture} alt="Rick and Morty Logo" />
 
 				<Filter
-					initURL={'https://rickandmortyapi.com/api/character'}
+					initURL={"https://rickandmortyapi.com/api/character"}
 					nextPage={nextPage}
 					setData={setCharacters}
 					setNextPage={setNextPage}
@@ -63,27 +64,29 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				/>
 
 				<section className="w-full flex flex-col items-center">
-					{characters.length > 0 ?
-						(characters?.map(character => (
+					{characters.length > 0 ? (
+						characters?.map((character) => (
 							<CharacterComponent character={character} key={character.id} />
-						)))
-					:
-						<div className="text-[18px] font-medium">
-							No characters found.
-						</div>
-					}
+						))
+					) : (
+						<div className="text-[18px] font-medium">No characters found.</div>
+					)}
 				</section>
 
 				{characters.length > 0 && nextPage && (
-					<Pagination<RMCharacter> nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
+					<Pagination<RMCharacter>
+						nextPage={nextPage}
+						setData={setCharacters}
+						setNextPage={setNextPage}
+						setIsLoading={setIsLoading}
+					/>
 				)}
 			</div>
 		</>
-	)
-}
+	);
+};
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-
 	const res = await fetch(`https://rickandmortyapi.com/api/character`);
 
 	const data = await res.json();
@@ -92,8 +95,8 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 		props: {
 			initCharacters: data.results,
 			initNextPage: data.info.next,
-		}
-	}
-}
+		},
+	};
+};
 
 export default Home;

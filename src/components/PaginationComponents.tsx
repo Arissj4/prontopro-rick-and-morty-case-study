@@ -1,42 +1,40 @@
-
 type PaginationProps<T> = {
-  nextPage: string | null,
-  setData: React.Dispatch<React.SetStateAction<T[]>>,
-  setNextPage: React.Dispatch<React.SetStateAction<string | null>>,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-}
+	nextPage: string | null;
+	setData: React.Dispatch<React.SetStateAction<T[]>>;
+	setNextPage: React.Dispatch<React.SetStateAction<string | null>>;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function Pagination<T> ({nextPage, setData, setNextPage, setIsLoading}: PaginationProps<T>){
+export default function Pagination<T>({
+	nextPage,
+	setData,
+	setNextPage,
+	setIsLoading,
+}: PaginationProps<T>) {
+	const getMoreData = async () => {
+		if (!nextPage) return;
 
-  const getMoreData = async () => {
+		try {
+			setIsLoading(true);
+			document.body.style.overflow = "hidden";
 
-    if (!nextPage) return;
+			const res = await fetch(nextPage);
+			const data = await res.json();
+			setData((prevCharacters) => [...prevCharacters, ...data.results]);
+			setNextPage(data.info.next);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+			document.body.style.overflow = "";
+		}
+	};
 
-    try{
-      setIsLoading(true);
-      document.body.style.overflow = "hidden";
-
-      const res = await fetch(nextPage);
-      const data = await res.json();
-      setData(prevCharacters => [...prevCharacters, ...data.results]);
-      setNextPage(data.info.next);
-
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      document.body.style.overflow = "";
-    }
-  }
-
-  return(
-    <div className="flex justify-center w-full">
-      <button
-        className="pagination-button"
-        onClick={() => getMoreData()}
-      >
-        laod more
-      </button>
-    </div>
-  )
+	return (
+		<div className="flex justify-center w-full">
+			<button className="pagination-button" onClick={() => getMoreData()}>
+				laod more
+			</button>
+		</div>
+	);
 }

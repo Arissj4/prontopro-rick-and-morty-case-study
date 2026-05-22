@@ -1,26 +1,27 @@
-$button-text-color: #2196F3;
-$button-bg-color: #E3F2FD;
+$button-text-color: #2196f3;
+$button-bg-color: #e3f2fd;
 
-$card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
-    0 3px 4px 0 rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2);
+$card-box-shadow:
+  0 2px 4px 0 rgba(0, 0, 0, 0.15),
+  0 3px 4px 0 rgba(0, 0, 0, 0.12),
+  0 1px 5px 0 rgba(0, 0, 0, 0.2);
 
-@mixin infoTextStyle{
-  h2{
+@mixin infoTextStyle {
+  h2 {
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
     color: rgba(0, 0, 0, 0.87);
   }
 
-  h3{
+  h3 {
     font-size: 16px;
     font-weight: 500;
     line-height: 30px;
     color: rgba(0, 0, 0, 1);
   }
 
-  h4{
+  h4 {
     font-size: 16px;
     font-weight: 500;
     line-height: 30px;
@@ -28,23 +29,23 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   }
 }
 
-.navbar__list{
+.navbar__list {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: var(--navbar-text-size);
   font-weight: var(--navbar-text-weight);
 
-  .navbar__item{
+  .navbar__item {
     margin-top: 46px;
   }
 
-  .navbar__button:hover{
+  .navbar__button:hover {
     cursor: pointer;
   }
 }
 
-.filter-container{
+.filter-container {
   width: 100%;
   height: fit-content;
   position: sticky;
@@ -52,19 +53,19 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   background-color: white;
   padding-bottom: 8px;
 
-  .filter-container__input-wrapper{
+  .filter-container__input-wrapper {
     width: 100%;
     display: flex;
     padding: 16px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 8px;
 
-    .filter-container__input{
+    .filter-container__input {
       width: 100%;
       height: 30px;
       margin-left: 8px;
 
-      &:focus-visible{
+      &:focus-visible {
         border: none;
         outline: none;
       }
@@ -72,12 +73,11 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   }
 }
 
-.filter-dialog{
-
+.filter-dialog {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 24px;
 
-  &__content-wrapper{
+  &__content-wrapper {
     min-height: 100px;
     background-color: white;
     margin-top: 80px;
@@ -85,27 +85,27 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
     border-radius: 4px;
   }
 
-  &__header{
+  &__header {
     display: flex;
     justify-content: space-between;
 
-    p{
+    p {
       font-size: 20px;
       font-weight: 500;
     }
 
-    button:hover{
+    button:hover {
       cursor: pointer;
     }
   }
 
-  &__content{
+  &__content {
     width: 100%;
     display: flex;
     flex-direction: column;
   }
 
-  &__select-wrapper{
+  &__select-wrapper {
     height: 56px;
     display: flex;
     justify-content: center;
@@ -115,37 +115,39 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
     padding: 8px;
   }
 
-  &__select{
+  &__select {
     width: 100%;
 
-    &:focus-visible{
+    &:focus-visible {
       border: none;
       outline: none;
     }
   }
 
-  &__footer{
+  &__footer {
     margin-top: 8px;
   }
 }
 
-.filter-button{
+.filter-button {
   width: 100%;
   margin-top: 16px;
   display: flex;
   background-color: $button-bg-color;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.25),
+    0 0 2px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 
-  img{
+  img {
     opacity: 0.54;
   }
 
-  p{
+  p {
     position: relative;
     width: 100%;
     font-weight: 500;
@@ -155,44 +157,44 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   }
 }
 
-.character-card{
+.character-card {
   width: 100%;
   margin-bottom: 16px;
   border-radius: 4px;
   box-shadow: $card-box-shadow;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 
-  .character-card__image{
+  .character-card__image {
     width: 100%;
     height: 300px;
     object-fit: cover;
     border-radius: 4px;
   }
 
-  .character-card__info{
+  .character-card__info {
     padding: 12px 16px;
 
     @include infoTextStyle();
   }
 }
 
-.simple-card-card{
+.simple-card-card {
   width: 100%;
   height: 128px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   display: flex;
   align-items: center;
   border-radius: 4px;
   box-shadow: $card-box-shadow;
   margin-bottom: 24px;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 
-  &__info{
+  &__info {
     width: 100%;
     text-align: center;
 
@@ -200,7 +202,7 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   }
 }
 
-.pagination-button{
+.pagination-button {
   width: 150px;
   height: 40px;
   display: flex;
@@ -212,7 +214,8 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   border-radius: 4px;
   font-weight: 500;
   text-transform: uppercase;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.15),
+  box-shadow:
+    0 6px 10px 0 rgba(0, 0, 0, 0.15),
     0 1px 18px 0 rgba(0, 0, 0, 0.12),
     0 3px 5px 0 rgba(0, 0, 0, 0.2);
   &:hover {
@@ -220,50 +223,50 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
   }
 }
 
-.userinfo-container{
-  &__title{
+.userinfo-container {
+  &__title {
     font-size: 20px;
     font-weight: 500;
     margin-top: 32px;
-    color: #8E8E93;
+    color: #8e8e93;
   }
 
-  &__content{
+  &__content {
     margin-top: 16px;
     padding-left: 16px;
 
-    &__item{
+    &__item {
       display: flex;
       flex-direction: column;
       justify-content: center;
       height: 64px;
       border-bottom: 1px solid #21212114;
 
-      &__label{
+      &__label {
         font-size: 20px;
         font-weight: 500;
-        color: #081F32;
+        color: #081f32;
       }
 
-      &__value{
+      &__value {
         font-size: 14px;
         font-weight: 500;
-        color: #6E798C;
+        color: #6e798c;
       }
 
-      &__date{
+      &__date {
         font-size: 14px;
         font-weight: 500;
-        color: #8E8E93;
+        color: #8e8e93;
         margin-bottom: 8px;
       }
 
-      span{
+      span {
         display: block;
       }
     }
 
-    &__link{
+    &__link {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -271,54 +274,55 @@ $card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
       height: fit-content;
       border-bottom: 1px solid #21212114;
 
-      img{
+      img {
         height: 24px;
       }
     }
   }
 }
 
-.locationInfo-container{
-  &__title{
+.locationInfo-container {
+  &__title {
     font-size: 32px;
     font-weight: 500;
-    color: #081F32;
+    color: #081f32;
     padding-bottom: 8px;
   }
 
-  &__type, &__dimension{
+  &__type,
+  &__dimension {
     display: flex;
     align-items: start;
     font-size: 20px;
     font-weight: 500;
     margin-top: 8px;
 
-    span{
+    span {
       display: inline-block;
       width: 50%;
     }
   }
 
-  &__type{
-    color: #081F32;
+  &__type {
+    color: #081f32;
   }
 
-  &__dimension{
-    color: #6E798C;
+  &__dimension {
+    color: #6e798c;
   }
 }
 
-.residents-container{
+.residents-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  &__title{
+  &__title {
     width: 100%;
     font-size: 20px;
     font-weight: 500;
     margin-top: 32px;
-    color: #8E8E93;
+    color: #8e8e93;
     margin-bottom: 16px;
   }
 }

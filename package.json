@@ -5,11 +5,13 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
-		"format": "echo \"You should setup a formatter first. =)\"",
-		"lint": "echo \"You should setup a linter first. =)\"",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"lint": "eslint .",
 		"start": "next start",
-		"test": "echo \"You should setup a test runner first. =)\"",
-		"typecheck": "tsc"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.3.0",
@@ -22,12 +24,17 @@
 	},
 	"devDependencies": {
 		"@testing-library/dom": "^10.4.0",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/react": "^16.3.0",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
 		"@types/node": "24.0.10",
 		"@types/react": "19.1.8",
 		"@types/react-dom": "19.1.6",
-		"typescript": "5.8.3"
+		"eslint": "^9.39.4",
+		"eslint-config-next": "^16.2.6",
+		"jsdom": "^29.1.1",
+		"prettier": "^3.8.3",
+		"typescript": "5.8.3",
+		"vitest": "^4.1.7"
 	},
 	"packageManager": "yarn@4.9.2"
 }

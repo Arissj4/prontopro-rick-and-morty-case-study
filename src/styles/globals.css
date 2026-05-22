@@ -4,12 +4,12 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --navbar-text-size: 24px;
   --navbar-text-weight: 500;
 }
 
-.page{
+.page {
   width: 100%;
   padding: 32px 24px;
   gap: 32px;
