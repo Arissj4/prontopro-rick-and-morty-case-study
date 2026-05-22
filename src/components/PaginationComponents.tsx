@@ -1,14 +1,12 @@
-import { Character } from "@/lib/costumeTypes"
-import { useState } from "react";
 
-type PaginationProps = {
+type PaginationProps<T> = {
   nextPage: string | null,
-  setData: React.Dispatch<React.SetStateAction<Character[]>>,
+  setData: React.Dispatch<React.SetStateAction<T[]>>,
   setNextPage: React.Dispatch<React.SetStateAction<string | null>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function Pagination ({nextPage, setData, setNextPage, setIsLoading}: PaginationProps){
+export default function Pagination<T> ({nextPage, setData, setNextPage, setIsLoading}: PaginationProps<T>){
 
   const getMoreData = async () => {
 

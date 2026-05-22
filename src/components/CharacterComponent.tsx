@@ -1,8 +1,8 @@
-import type { Character } from "@/lib/costumeTypes";
+import type { RMCharacter } from "@/lib/costumeTypes";
 import { useRouter } from "next/navigation";
 
 
-export default function CharacterComponent({character}: {character: Character}) {
+export default function CharacterComponent({character}: {character: RMCharacter}) {
   const router = useRouter();
   return(
     <>
