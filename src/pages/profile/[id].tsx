@@ -15,12 +15,6 @@ export default function Profile({ data, episodesData }: ProfileProps){
   const [profile, setProfile] = useState<RMCharacter>(data)
   const [episodes, setEpisodes] = useState<RMEpisode[]>(episodesData);
 
-  useEffect(() => {
-    console.log(profile)
-  },[profile])
-  useEffect(() => {
-    console.log(episodes)
-  },[episodes])
   return(
     <>
       <div className="p-4">
