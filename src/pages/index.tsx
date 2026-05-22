@@ -1,7 +1,7 @@
 import RandMPicture from "@/public/rick-and-morty.svg"
 import Image from "next/image"
 import Filter from "@/components/FilterComponent"
-import type { Character } from "@/lib/costumeTypes"
+import type { RMCharacter } from "@/lib/costumeTypes"
 import CharacterComponent from "@/components/CharacterComponent"
 import Pagination from "@/components/PaginationComponents"
 import { GetServerSideProps } from "next"
@@ -9,13 +9,13 @@ import { useState } from "react"
 
 
 type HomeProps = {
-	initCharacters: Character[],
+	initCharacters: RMCharacter[],
 	initNextPage: string,
 }
 
 const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 
-	const [characters, setCharacters] = useState<Character[]>(initCharacters);
+	const [characters, setCharacters] = useState<RMCharacter[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -29,9 +29,9 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
       const res:Response = await fetch(url);
       const data = await res.json();
 
-      data.results.forEach((element: Character) => {
+      data.results.forEach((element: RMCharacter) => {
 				['species', 'gender', 'status'].forEach(filter => {
-					filters[filter].add(element[filter as keyof Character] as string);
+					filters[filter].add(element[filter as keyof RMCharacter] as string);
 				})
       });
 

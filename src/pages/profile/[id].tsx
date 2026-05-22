@@ -1,4 +1,4 @@
-import { Character, Episode } from "@/lib/costumeTypes";
+import { RMCharacter, RMEpisode } from "@/lib/costumeTypes";
 import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image"
@@ -7,13 +7,13 @@ import Back from "@/public/back.svg"
 import Right from "@/public/right.svg"
 
 type ProfileProps = {
-  data: Character,
-  episodesData: Episode[]
+  data: RMCharacter,
+  episodesData: RMEpisode[]
 }
 
 export default function Profile({ data, episodesData }: ProfileProps){
-  const [profile, setProfile] = useState<Character>(data)
-  const [episodes, setEpisodes] = useState<Episode[]>(episodesData);
+  const [profile, setProfile] = useState<RMCharacter>(data)
+  const [episodes, setEpisodes] = useState<RMEpisode[]>(episodesData);
 
   useEffect(() => {
     console.log(profile)

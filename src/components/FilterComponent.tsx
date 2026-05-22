@@ -2,7 +2,6 @@ import Image from "next/image"
 import MagnifierIcon from "@/public/magnifier.svg"
 import FilterIcon from "@/public/filter.svg"
 import CloseIcon from "@/public/close.svg"
-import { Character, Episode } from "@/lib/costumeTypes"
 import { useState } from "react"
 
 

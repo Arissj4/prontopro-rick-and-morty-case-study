@@ -1,4 +1,4 @@
-type Character = {
+type RMCharacter = {
   id: number,
   name: string,
   status: string,
@@ -13,7 +13,7 @@ type Character = {
   created: string,
 }
 
-type Location = {
+type RMLocation = {
   id: number,
   name: string,
   type: string,
@@ -23,7 +23,7 @@ type Location = {
   created: string,
 }
 
-type Episode = {
+type RMEpisode = {
   id: number,
   name: string,
   air_date: string,
@@ -33,4 +33,4 @@ type Episode = {
   created: string,
 }
 
-export type { Character, Location, Episode }
+export type { RMCharacter, RMLocation, RMEpisode }
