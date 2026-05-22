@@ -1,5 +1,5 @@
 import { RMCharacter, RMLocation } from "@/lib/costumeTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image"
 import Link from "next/link";
@@ -15,7 +15,7 @@ export default function Profile({ data, residentsData }: ProfileProps){
   const [location, setLocation] = useState<RMLocation>(data)
   const [residents, setResidents] = useState<RMCharacter[]>(residentsData);
 
-
+  useEffect(() => {console.log(residents)}, [residents])
   return(
     <>
       <div className="p-4">
@@ -58,9 +58,13 @@ export default function Profile({ data, residentsData }: ProfileProps){
             Residents
           </h2>
 
-          {residents.map(resident => (
-            <CharacterComponent character={resident} key={resident.id} />
-          ))}
+          {residents.length > 0 ?
+            residents.map(resident => (
+              <CharacterComponent character={resident} key={resident.id} />
+            ))
+          :
+            <p className="text-[18px] font-medium">No residents found for this location.</p>
+          }
         </section>
       </div>
     </>
@@ -75,8 +79,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const residentsQueryIds = data.residents.map((episode: string) => episode.split('/').pop());
   const query: string = residentsQueryIds.join();
-  const residentsRes = await fetch(`https://rickandmortyapi.com/api/character/${query}`)
-  const residentsData = await residentsRes.json()
+  const residentsRes = await fetch(`https://rickandmortyapi.com/api/character/${query}`);
+  let residentsData: RMCharacter[] = await residentsRes.json(); // This might be an array or a single object
+  if (!Array.isArray(residentsData)) {
+    residentsData = [residentsData];
+  }
   return {
     props: {
       data,

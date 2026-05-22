@@ -73,7 +73,7 @@ export default function Profile({ data, episodesData }: ProfileProps){
               <span className="userinfo-container__content__item__value">{profile.type}</span>
             </div>
 
-            <Link href={`/location/${profile.location.url.split('/').pop()}`} className="userinfo-container__content__link">
+            <Link href={`/locations/${profile.location.url.split('/').pop()}`} className="userinfo-container__content__link">
               <div className="flex flex-col flex-1">
                 <span className="userinfo-container__content__item__label">Location</span>
                 <span className="userinfo-container__content__item__value">{profile.location.name}</span>
@@ -89,16 +89,20 @@ export default function Profile({ data, episodesData }: ProfileProps){
           </h2>
 
           <div className="userinfo-container__content">
-            {episodes.map(episode => (
-              <Link href={`/episode/${episode.id}`} className="userinfo-container__content__link">
-                <div className="flex flex-col flex-1">
-                  <span className="userinfo-container__content__item__label">{episode.episode}</span>
-                  <span className="userinfo-container__content__item__value">{episode.name}</span>
-                  <span className="userinfo-container__content__item__date">{episode.air_date}</span>
-                </div>
-                <Image className="flex" src={Right} alt="forward" width={24} height={24} />
-              </Link>
-            ))}
+            {episodes.length > 0 ?
+              episodes.map(episode => (
+                <Link href={`/episodes/${episode.id}`} className="userinfo-container__content__link">
+                  <div className="flex flex-col flex-1">
+                    <span className="userinfo-container__content__item__label">{episode.episode}</span>
+                    <span className="userinfo-container__content__item__value">{episode.name}</span>
+                    <span className="userinfo-container__content__item__date">{episode.air_date}</span>
+                  </div>
+                  <Image className="flex" src={Right} alt="forward" width={24} height={24} />
+                </Link>
+              ))
+            :
+              <p className="text-[18px] font-medium">No episodes found.</p>
+            }
           </div>
         </section>
       </div>
@@ -115,7 +119,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const episodesQueryIds = data.episode.map((episode: string) => episode.split('/').pop());
   const query: string = episodesQueryIds.join();
   const episodesRes = await fetch(`https://rickandmortyapi.com/api/episode/${query}`)
-  const episodesData = await episodesRes.json()
+  let episodesData: RMEpisode[] = await episodesRes.json()
+  if (!Array.isArray(episodesData)) {
+    episodesData = [episodesData];
+  }
   return {
     props: {
       data,

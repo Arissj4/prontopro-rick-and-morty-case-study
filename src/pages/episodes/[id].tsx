@@ -58,9 +58,13 @@ export default function Profile({ data, charactersData }: ProfileProps){
             Cast
           </h2>
 
-          {characters.map(character => (
-            <CharacterComponent character={character} key={character.id} />
-          ))}
+          {characters.length > 0 ?
+            characters.map(character => (
+              <CharacterComponent character={character} key={character.id} />
+            ))
+          :
+            <p className="text-[18px] font-medium">No characters found for this episode.</p>
+          }
         </section>
       </div>
     </>
@@ -76,7 +80,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const charactersQueryIds = data.characters.map((episode: string) => episode.split('/').pop());
   const query: string = charactersQueryIds.join();
   const charactersRes = await fetch(`https://rickandmortyapi.com/api/character/${query}`)
-  const charactersData = await charactersRes.json()
+  let charactersData: RMCharacter[] = await charactersRes.json()
+  if (!Array.isArray(charactersData)) {
+    charactersData = [charactersData];
+  }
   return {
     props: {
       data,
