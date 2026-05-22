@@ -63,6 +63,7 @@ export default function Filter({initURL, nextPage, setData, setNextPage, setIsLo
     <>
       <FilterDialog isVisible={filterDialogVisible} setVisible={setFilterDialogVisible} filter={filters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} filterData={filterData} filterName={filterName}/>
       <div className="filter-container w-full">
+        <div className="absolute flex w-[104%] -z-10 -right-2 h-full bg-white rounded-md" />
         <div className="filter-container__input-wrapper">
           <Image src={MagnifierIcon} alt="Magnifying glass icon" width={20} height={20}/>
           <input
@@ -106,11 +107,7 @@ type FilterDialogProps = {
 
 export function FilterDialog({ isVisible, setVisible, filter, selectedFilters, setSelectedFilters, filterData, filterName }: FilterDialogProps) {
   return (
-    <div className={`
-      filter-dialog
-      ${isVisible ? '' : 'hidden'}
-      fixed inset-0 z-100 m-auto w-md
-    `}
+    <div className={`filter-dialog ${isVisible ? '' : 'hidden'} fixed inset-0 z-100 m-auto w-md`}
     >
       <div className="filter-dialog__content-wrapper">
         <div
