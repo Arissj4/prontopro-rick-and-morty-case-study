@@ -19,18 +19,18 @@ export default function Locations({ initCharacters, initNextPage }: LocationsPro
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [filters, setFilters] = useState<Record<string, Set<string>>>({'species': new Set(), 'gender': new Set(), status: new Set()});
+  const [filters, setFilters] = useState<Record<string, Set<string>>>({'type': new Set(), 'dimension': new Set()});
 
 	const getFilters = async () => {
 
-    let url: string | null = 'https://rickandmortyapi.com/api/character';
+    let url: string | null = 'https://rickandmortyapi.com/api/location';
 
     while (url) {
       const res:Response = await fetch(url);
       const data = await res.json();
 
       data.results.forEach((element: RMLocation) => {
-				['species', 'gender', 'status'].forEach(filter => {
+				['type', 'dimension'].forEach(filter => {
 					filters[filter].add(element[filter as keyof RMLocation] as string);
 				})
       });
@@ -52,7 +52,7 @@ export default function Locations({ initCharacters, initNextPage }: LocationsPro
 				<Image src={RandM} alt="Rick and Morty Logo" />
 
 				<Filter
-					initURL={'https://rickandmortyapi.com/api/character'}
+					initURL={'https://rickandmortyapi.com/api/location'}
 					nextPage={nextPage}
 					setData={setLocations}
 					setNextPage={setNextPage}
