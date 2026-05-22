@@ -1,5 +1,5 @@
-import { RMCharacter, RMEpisode, RMLocation } from "@/lib/costumeTypes";
-import { useState, useEffect } from "react";
+import { RMCharacter, RMLocation } from "@/lib/costumeTypes";
+import { useState } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image"
 import Link from "next/link";
@@ -39,13 +39,13 @@ export default function Profile({ data, residentsData }: ProfileProps){
               Type
             </span>
             <span>
-              {location.type}
+              Dimension
             </span>
           </div>
 
           <div className="locationInfo-container__dimension">
             <span>
-              Planet
+              {location.type}
             </span>
             <span>
               {location.dimension === "unknown" ? "Unknown" : location.dimension}
