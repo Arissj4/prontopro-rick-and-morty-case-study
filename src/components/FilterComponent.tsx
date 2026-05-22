@@ -32,7 +32,7 @@ export default function Filter({searchPlaceholder, initURL, nextPage, setData, s
 
       let url:string = "";
 
-      if(initURL.split("/").find((element) => element === "episode")) {
+      if(initURL.includes("/episode")) {
         const isEpisodeCode = searchedName ? /^s\d{2}e\d{2}$/i.test(searchedName) : null;
         const params = new URLSearchParams();
         if (searchedName) {
@@ -49,7 +49,7 @@ export default function Filter({searchPlaceholder, initURL, nextPage, setData, s
       }
 
 
-      setSelectedFilters({});
+
       setFilterDialogVisible(false);
 
       const res = await fetch(url);
@@ -68,6 +68,7 @@ export default function Filter({searchPlaceholder, initURL, nextPage, setData, s
     } catch (error) {
       console.log(error);
     } finally {
+      setSelectedFilters({});
       setIsLoading(false);
       document.body.style.overflow = "";
     }
@@ -86,6 +87,7 @@ export default function Filter({searchPlaceholder, initURL, nextPage, setData, s
             placeholder={searchPlaceholder ? searchPlaceholder : "Filter by name..."}
             name="name"
             onChange={(e) => {filterData(e.target.value)}}
+            defaultValue={""}
           />
         </div>
 
