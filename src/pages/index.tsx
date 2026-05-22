@@ -75,7 +75,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				</section>
 
 				{characters.length > 0 && nextPage && (
-					<Pagination nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
+					<Pagination<RMCharacter> nextPage={nextPage} setData={setCharacters} setNextPage={setNextPage} setIsLoading={setIsLoading}/>
 				)}
 			</div>
 		</>
