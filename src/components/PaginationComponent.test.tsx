@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import Pagination from "@/components/PaginationComponents";
+import Pagination from "./PaginationComponents";
 
 const mockProps = {
 	nextPage: "https://rickandmortyapi.com/api/character?page=2",
