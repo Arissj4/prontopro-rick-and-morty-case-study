@@ -176,28 +176,26 @@ export function FilterDialog({
 
 				<div className="filter-dialog__content">
 					{filter &&
-						Object.entries(filter).map((filter) => (
+						Object.entries(filter).map(([key, value]) => (
 							<div
 								className="filter-dialog__select-wrapper"
-								key={filter[0]}
-								id={filter[0]}
+								key={key}
 							>
 								<select
 									className="filter-dialog__select"
-									id={filter[0]}
-									key={filter[0]}
-									value={selectedFilters[filter[0]] || ""}
+									id={key}
+									value={selectedFilters[key] || ""}
 									onChange={(e) =>
 										setSelectedFilters({
 											...selectedFilters,
-											[filter[0]]: e.target.value,
+											[key]: e.target.value,
 										})
 									}
 								>
 									<option value="" disabled hidden>
-										{filter[0].charAt(0).toUpperCase() + filter[0].slice(1)}
+										{key.charAt(0).toUpperCase() + key.slice(1)}
 									</option>
-									{Array.from(filter[1]).map((it) => (
+									{Array.from(value).map((it) => (
 										<option key={it} id={it} value={it} label={it} />
 									))}
 								</select>
