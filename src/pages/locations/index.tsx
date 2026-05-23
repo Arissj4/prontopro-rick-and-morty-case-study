@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import RandM from "@/public/RandM.svg";
 import type { RMLocation } from "@/lib/costumeTypes";
@@ -19,6 +19,7 @@ export default function Locations({
 	const [locations, setLocations] = useState<RMLocation[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isError, setIsError] = useState<boolean>(false);
 
 	const [filters, setFilters] = useState<Record<string, Set<string>>>({
 		type: new Set(),
@@ -51,6 +52,13 @@ export default function Locations({
 				</div>
 			)}
 
+			{isError && (
+				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
+					An error occurred while fetching data.
+					<button onClick={() => setIsError(false)}>Close</button>
+				</div>
+			)}
+
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandM} alt="Rick and Morty Logo" />
 
@@ -62,6 +70,7 @@ export default function Locations({
 					advancedButton={true}
 					filters={filters}
 					getFilter={getFilters}
+					setIsError={setIsError}
 				/>
 
 				<section className="w-full flex flex-col items-center">
@@ -84,6 +93,7 @@ export default function Locations({
 						setData={setLocations}
 						setNextPage={setNextPage}
 						setIsLoading={setIsLoading}
+						setIsError={setIsError}
 					/>
 				)}
 			</div>

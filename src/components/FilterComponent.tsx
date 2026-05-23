@@ -13,6 +13,7 @@ type FilterProps<T>= {
 	advancedButton: boolean;
 	filters?: Record<string, Set<string>>;
 	getFilter?: () => void;
+	setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Filter<T>({
@@ -22,8 +23,9 @@ export default function Filter<T>({
 	setNextPage,
 	setIsLoading,
 	advancedButton,
-	getFilter,
 	filters,
+	getFilter,
+	setIsError,
 }: FilterProps<T>) {
 	const [filterDialogVisible, setFilterDialogVisible] =
 		useState<boolean>(false);
@@ -73,7 +75,8 @@ export default function Filter<T>({
 				setNextPage(null);
 			}
 		} catch (error) {
-			console.log(error);
+			setIsError(true);
+			console.log(error)
 		} finally {
 			setSelectedFilters({});
 			setIsLoading(false);

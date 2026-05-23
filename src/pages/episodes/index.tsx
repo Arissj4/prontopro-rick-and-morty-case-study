@@ -19,12 +19,20 @@ export default function Episodes({
 	const [episodes, setLocations] = useState<RMEpisode[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isError, setIsError] = useState<boolean>(false);
 
 	return (
 		<>
 			{isLoading && (
 				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
 					Loading...
+				</div>
+			)}
+
+			{isError && (
+				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
+					An error occurred while fetching data.
+					<button onClick={() => setIsError(false)}>Close</button>
 				</div>
 			)}
 
@@ -60,6 +68,7 @@ export default function Episodes({
 						setData={setLocations}
 						setNextPage={setNextPage}
 						setIsLoading={setIsLoading}
+						setIsError={setIsError}
 					/>
 				)}
 			</div>

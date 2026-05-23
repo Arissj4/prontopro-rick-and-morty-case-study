@@ -3,6 +3,7 @@ type PaginationProps<T> = {
 	setData: React.Dispatch<React.SetStateAction<T[]>>;
 	setNextPage: React.Dispatch<React.SetStateAction<string | null>>;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Pagination<T>({
@@ -10,6 +11,7 @@ export default function Pagination<T>({
 	setData,
 	setNextPage,
 	setIsLoading,
+	setIsError,
 }: PaginationProps<T>) {
 	const getMoreData = async () => {
 		if (!nextPage) return;
@@ -23,7 +25,8 @@ export default function Pagination<T>({
 			setData((prevCharacters) => [...prevCharacters, ...data.results]);
 			setNextPage(data.info.next);
 		} catch (error) {
-			console.log(error);
+			setIsError(true);
+			console.log(error)
 		} finally {
 			setIsLoading(false);
 			document.body.style.overflow = "";

@@ -16,6 +16,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 	const [characters, setCharacters] = useState<RMCharacter[]>(initCharacters);
 	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isError, setIsError] = useState<boolean>(false);
 
 	const [filters, setFilters] = useState<Record<string, Set<string>>>({
 		species: new Set(),
@@ -49,6 +50,13 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				</div>
 			)}
 
+			{isError && (
+				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
+					An error occurred while fetching data.
+					<button onClick={() => setIsError(false)}>Close</button>
+				</div>
+			)}
+
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandMPicture} alt="Rick and Morty Logo" width={500} height={200}/>
 
@@ -60,6 +68,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 					advancedButton={true}
 					filters={filters}
 					getFilter={getFilters}
+					setIsError={setIsError}
 				/>
 
 				<section className="w-full flex flex-col items-center">
@@ -78,6 +87,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 						setData={setCharacters}
 						setNextPage={setNextPage}
 						setIsLoading={setIsLoading}
+						setIsError={setIsError}
 					/>
 				)}
 			</div>
