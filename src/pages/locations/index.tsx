@@ -56,7 +56,6 @@ export default function Locations({
 
 				<Filter<RMLocation>
 					initURL={"https://rickandmortyapi.com/api/location"}
-					nextPage={nextPage}
 					setData={setLocations}
 					setNextPage={setNextPage}
 					setIsLoading={setIsLoading}

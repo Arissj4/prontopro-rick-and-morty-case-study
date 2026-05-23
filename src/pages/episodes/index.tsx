@@ -34,7 +34,6 @@ export default function Episodes({
 				<Filter<RMEpisode>
 					searchPlaceholder="Name or episode (ex.S01E01)..."
 					initURL={"https://rickandmortyapi.com/api/episode"}
-					nextPage={nextPage}
 					setData={setLocations}
 					setNextPage={setNextPage}
 					setIsLoading={setIsLoading}

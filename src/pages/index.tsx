@@ -54,7 +54,6 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 
 				<Filter<RMCharacter>
 					initURL={"https://rickandmortyapi.com/api/character"}
-					nextPage={nextPage}
 					setData={setCharacters}
 					setNextPage={setNextPage}
 					setIsLoading={setIsLoading}
