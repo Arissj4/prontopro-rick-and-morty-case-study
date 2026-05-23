@@ -1,5 +1,4 @@
 import { RMCharacter, RMEpisode } from "@/lib/costumeTypes";
-import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +11,8 @@ type ProfileProps = {
 };
 
 export default function Profile({ data, episodesData }: ProfileProps) {
-	const [profile, setProfile] = useState<RMCharacter>(data);
-	const [episodes, setEpisodes] = useState<RMEpisode[]>(episodesData);
+	const profile: RMCharacter = data;
+	const episodes: RMEpisode[] = episodesData;
 
 	return (
 		<>
@@ -26,7 +25,7 @@ export default function Profile({ data, episodesData }: ProfileProps) {
 				</div>
 
 				<div className="flex justify-center mt-2">
-					<img
+					<Image
 						src={profile.image}
 						alt="User image"
 						width={146}
@@ -122,6 +121,7 @@ export default function Profile({ data, episodesData }: ProfileProps) {
 								<Link
 									href={`/episodes/${episode.id}`}
 									className="userinfo-container__content__link"
+									key={episode.id}
 								>
 									<div className="flex flex-col flex-1">
 										<span className="userinfo-container__content__item__label">

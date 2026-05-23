@@ -1,5 +1,4 @@
 import { RMCharacter, RMLocation } from "@/lib/costumeTypes";
-import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,12 +11,10 @@ type ProfileProps = {
 };
 
 export default function Profile({ data, residentsData }: ProfileProps) {
-	const [location, setLocation] = useState<RMLocation>(data);
-	const [residents, setResidents] = useState<RMCharacter[]>(residentsData);
+	const location: RMLocation = data;
+	const residents: RMCharacter[] = residentsData;
 
-	useEffect(() => {
-		console.log(residents);
-	}, [residents]);
+
 	return (
 		<>
 			<div className="p-4">

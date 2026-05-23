@@ -1,5 +1,6 @@
 import type { RMCharacter } from "@/lib/costumeTypes";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function CharacterComponent({
 	character,
@@ -13,7 +14,7 @@ export default function CharacterComponent({
 				className="character-card"
 				onClick={() => router.push(`/profile/${character.id}`)}
 			>
-				<img
+				<Image
 					className="character-card__image"
 					src={character.image}
 					alt={character.name}

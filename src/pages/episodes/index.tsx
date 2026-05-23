@@ -31,7 +31,7 @@ export default function Episodes({
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RM} alt="Rick and Morty Logo" />
 
-				<Filter
+				<Filter<RMEpisode>
 					searchPlaceholder="Name or episode (ex.S01E01)..."
 					initURL={"https://rickandmortyapi.com/api/episode"}
 					nextPage={nextPage}

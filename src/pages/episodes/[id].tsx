@@ -1,5 +1,4 @@
 import { RMCharacter, RMEpisode } from "@/lib/costumeTypes";
-import { useState } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +11,8 @@ type ProfileProps = {
 };
 
 export default function Profile({ data, charactersData }: ProfileProps) {
-	const [episode, setLocation] = useState<RMEpisode>(data);
-	const [characters, setResidents] = useState<RMCharacter[]>(charactersData);
+	const episode: RMEpisode = data;
+	const characters: RMCharacter[] = charactersData;
 
 	return (
 		<>

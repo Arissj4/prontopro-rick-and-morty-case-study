@@ -4,11 +4,10 @@ import FilterIcon from "@/public/filter.svg";
 import CloseIcon from "@/public/close.svg";
 import { useState } from "react";
 
-type FilterProps = {
+type FilterProps<T>= {
 	searchPlaceholder?: string;
 	initURL: string;
-	nextPage: string | null;
-	setData: React.Dispatch<React.SetStateAction<any[]>>;
+	setData: React.Dispatch<React.SetStateAction<T[]>>;
 	setNextPage: React.Dispatch<React.SetStateAction<string | null>>;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	advancedButton: boolean;
@@ -16,17 +15,16 @@ type FilterProps = {
 	getFilter?: () => void;
 };
 
-export default function Filter({
+export default function Filter<T>({
 	searchPlaceholder,
 	initURL,
-	nextPage,
 	setData,
 	setNextPage,
 	setIsLoading,
 	advancedButton,
 	getFilter,
 	filters,
-}: FilterProps) {
+}: FilterProps<T>) {
 	const [filterDialogVisible, setFilterDialogVisible] =
 		useState<boolean>(false);
 	const [selectedFilters, setSelectedFilters] = useState<
@@ -56,7 +54,7 @@ export default function Filter({
 				url = `${initURL}/`;
 				if (searchedName) url += `?name=${searchedName.toLowerCase()}`;
 				Object.entries(selectedFilters).forEach(([key, value]) => {
-					value ? (url += `&${key}=${value}`) : null;
+					if (value) url += `&${key}=${value}`;
 				});
 			}
 

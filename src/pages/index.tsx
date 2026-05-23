@@ -52,7 +52,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandMPicture} alt="Rick and Morty Logo" />
 
-				<Filter
+				<Filter<RMCharacter>
 					initURL={"https://rickandmortyapi.com/api/character"}
 					nextPage={nextPage}
 					setData={setCharacters}

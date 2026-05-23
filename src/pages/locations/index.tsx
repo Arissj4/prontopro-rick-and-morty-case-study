@@ -54,7 +54,7 @@ export default function Locations({
 			<div className={`page flex flex-col items-center`}>
 				<Image src={RandM} alt="Rick and Morty Logo" />
 
-				<Filter
+				<Filter<RMLocation>
 					initURL={"https://rickandmortyapi.com/api/location"}
 					nextPage={nextPage}
 					setData={setLocations}
