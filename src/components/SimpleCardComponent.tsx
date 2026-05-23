@@ -15,20 +15,14 @@ export default function SimpleCardComponent({ type, data }: SimpleCardProps) {
 	return (
 		<>
 			{type === "location" ? (
-				<Link
-					className="simple-card-card"
-					href={`/locations/${data.id}`}
-				>
+				<Link className="simple-card-card" href={`/locations/${data.id}`}>
 					<div className="simple-card-card__info">
 						<h2>{data.name}</h2>
 						<h4>{data.type}</h4>
 					</div>
 				</Link>
 			) : type === "episode" ? (
-				<Link
-					className="simple-card-card"
-					href={`/episodes/${data.id}`}
-				>
+				<Link className="simple-card-card" href={`/episodes/${data.id}`}>
 					<div className="simple-card-card__info">
 						<h2>{data.name}</h2>
 						<h4>{data.air_date}</h4>

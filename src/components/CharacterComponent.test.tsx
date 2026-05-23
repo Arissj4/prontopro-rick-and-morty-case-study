@@ -28,7 +28,6 @@ const mockCharacter: RMCharacter = {
 };
 
 describe("Check CharacterComponent rendering", () => {
-
 	// Check the component to render the Name of the character
 	it("Check name rendering", () => {
 		render(<CharacterComponent character={mockCharacter} />);
