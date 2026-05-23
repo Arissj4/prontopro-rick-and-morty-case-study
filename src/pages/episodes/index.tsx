@@ -46,6 +46,7 @@ export default function Episodes({
 					setNextPage={setNextPage}
 					setIsLoading={setIsLoading}
 					advancedButton={false}
+					setIsError={setIsError}
 				/>
 
 				<section className="w-full flex flex-col items-center">
