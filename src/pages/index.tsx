@@ -50,7 +50,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src={RandMPicture} alt="Rick and Morty Logo" />
+				<Image src={RandMPicture} alt="Rick and Morty Logo" width={500} height={200}/>
 
 				<Filter<RMCharacter>
 					initURL={"https://rickandmortyapi.com/api/character"}

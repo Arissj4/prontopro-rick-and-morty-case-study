@@ -19,6 +19,7 @@ export default function CharacterComponent({
 					src={character.image}
 					alt={character.name}
 					loading="lazy"
+					width={500} height={200}
 				/>
 				<div className="character-card__info">
 					<h2>{character.name}</h2>
