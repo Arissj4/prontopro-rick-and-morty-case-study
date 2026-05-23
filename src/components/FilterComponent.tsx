@@ -76,6 +76,10 @@ export default function Filter<T>({
 			}
 		} catch (error) {
 			setIsError(true);
+			const inputElement = document.querySelector('input[name="name"]') as HTMLInputElement;
+			if (inputElement) {
+				inputElement.blur();
+			}
 			console.log(error)
 		} finally {
 			setSelectedFilters({});
