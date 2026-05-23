@@ -4,7 +4,7 @@ import FilterIcon from "@/public/filter.svg";
 import CloseIcon from "@/public/close.svg";
 import { useState } from "react";
 
-type FilterProps<T>= {
+type FilterProps<T> = {
 	searchPlaceholder?: string;
 	initURL: string;
 	setData: React.Dispatch<React.SetStateAction<T[]>>;
@@ -76,11 +76,13 @@ export default function Filter<T>({
 			}
 		} catch (error) {
 			setIsError(true);
-			const inputElement = document.querySelector('input[name="name"]') as HTMLInputElement;
+			const inputElement = document.querySelector(
+				'input[name="name"]'
+			) as HTMLInputElement;
 			if (inputElement) {
 				inputElement.blur();
 			}
-			console.log(error)
+			console.log(error);
 		} finally {
 			setSelectedFilters({});
 			setIsLoading(false);

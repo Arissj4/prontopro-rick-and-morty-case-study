@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import RandM from "@/public/RandM.svg";
 import type { RMLocation } from "@/lib/costumeTypes";
@@ -55,7 +55,12 @@ export default function Locations({
 			{isError && (
 				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
 					An error occurred while fetching data.
-					<button onClick={() => setIsError(false)}>Close</button>
+					<button
+						className="pagination-button mt-4"
+						onClick={() => setIsError(false)}
+					>
+						Close
+					</button>
 				</div>
 			)}
 

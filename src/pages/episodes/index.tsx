@@ -32,7 +32,12 @@ export default function Episodes({
 			{isError && (
 				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
 					An error occurred while fetching data.
-					<button onClick={() => setIsError(false)}>Close</button>
+					<button
+						className="pagination-button mt-4"
+						onClick={() => setIsError(false)}
+					>
+						Close
+					</button>
 				</div>
 			)}
 

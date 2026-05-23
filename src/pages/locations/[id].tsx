@@ -14,7 +14,6 @@ export default function Profile({ data, residentsData }: ProfileProps) {
 	const location: RMLocation = data;
 	const residents: RMCharacter[] = residentsData;
 
-
 	return (
 		<>
 			<div className="p-4">

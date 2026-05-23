@@ -26,7 +26,7 @@ export default function Pagination<T>({
 			setNextPage(data.info.next);
 		} catch (error) {
 			setIsError(true);
-			console.log(error)
+			console.log(error);
 		} finally {
 			setIsLoading(false);
 			document.body.style.overflow = "";

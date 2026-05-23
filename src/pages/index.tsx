@@ -51,14 +51,24 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			)}
 
 			{isError && (
-				<div className="fixed z-60 w-md flex h-full justify-center items-center bg-white opacity-60 text-black text-[24px] ">
+				<div className="fixed z-60 w-md flex flex-col h-full justify-center items-center bg-[#ffffff99] text-black text-[24px] ">
 					An error occurred while fetching data.
-					<button onClick={() => setIsError(false)}>Close</button>
+					<button
+						className="pagination-button mt-4"
+						onClick={() => setIsError(false)}
+					>
+						Close
+					</button>
 				</div>
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src={RandMPicture} alt="Rick and Morty Logo" width={500} height={200}/>
+				<Image
+					src={RandMPicture}
+					alt="Rick and Morty Logo"
+					width={500}
+					height={200}
+				/>
 
 				<Filter<RMCharacter>
 					initURL={"https://rickandmortyapi.com/api/character"}
