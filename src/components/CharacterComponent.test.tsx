@@ -27,6 +27,10 @@ const mockCharacter: RMCharacter = {
 	created: "2017-11-04T18:48:46.250Z",
 };
 
+beforeEach(() => {
+	jest.clearAllMocks();
+});
+
 describe("Check CharacterComponent rendering", () => {
 	// Check the component to render the Name of the character
 	it("Check name rendering", () => {

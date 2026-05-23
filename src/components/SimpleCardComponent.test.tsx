@@ -30,6 +30,10 @@ const mockEpisode: RMEpisode = {
 	created: "2017-11-10T12:56:33.798Z",
 };
 
+beforeEach(() => {
+	jest.clearAllMocks();
+});
+
 describe("Check SimpleCardComponent rendering", () => {
 	// Check the component to render the Name and Type of the Location
 	it("Check Location name and type", () => {
