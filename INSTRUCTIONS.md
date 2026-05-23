@@ -10,7 +10,7 @@ You’re free to choose whether to implement standard pagination or infinite scr
 
 You’re free to choose whether to use the REST API or GraphQL API.
 
-You can find the design we expect you to implement [here](<https://www.figma.com/file/FXostZn4wrjuNr5W4D5PGA/Rick-and-Morty-(web-responsive)-(Community)?node-id=97%3A196&amp;t=HV2hIQo7VrgnlR1f-1>).
+You can find the design we expect you to implement [here](<https://www.figma.com/file/FXostZn4wrjuNr5W4D5PGA/Rick-and-Morty-(web-responsive)-(Community)?node-id=97%3A196&t=HV2hIQo7VrgnlR1f-1>).
 
 The project already has the following scripts set up:
 
