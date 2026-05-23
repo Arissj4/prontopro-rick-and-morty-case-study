@@ -2,13 +2,12 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Lint, type check, and build
+    name: Lint, type check, test, and build
     runs-on: ubuntu-latest
 
     steps:
