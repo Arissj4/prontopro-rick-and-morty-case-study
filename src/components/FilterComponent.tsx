@@ -177,10 +177,7 @@ export function FilterDialog({
 				<div className="filter-dialog__content">
 					{filter &&
 						Object.entries(filter).map(([key, value]) => (
-							<div
-								className="filter-dialog__select-wrapper"
-								key={key}
-							>
+							<div className="filter-dialog__select-wrapper" key={key}>
 								<select
 									className="filter-dialog__select"
 									id={key}

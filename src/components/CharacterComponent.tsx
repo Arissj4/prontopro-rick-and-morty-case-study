@@ -9,10 +9,7 @@ export default function CharacterComponent({
 }) {
 	return (
 		<>
-			<Link
-				href={`/profile/${character.id}`}
-				className="character-card"
-			>
+			<Link href={`/profile/${character.id}`} className="character-card">
 				<Image
 					className="character-card__image"
 					src={character.image}
