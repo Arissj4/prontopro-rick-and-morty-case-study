@@ -32,19 +32,16 @@ beforeEach(() => {
 });
 
 describe("Check CharacterComponent rendering", () => {
-	// Check the component to render the Name of the character
 	it("Check name rendering", () => {
 		render(<CharacterComponent character={mockCharacter} />);
 		expect(screen.getByText("Rick Sanchez")).toBeInTheDocument();
 	});
 
-	// Check the component to render the Image of the character
 	it("Check the image rendering", () => {
 		render(<CharacterComponent character={mockCharacter} />);
 		expect(screen.getByRole("img")).toBeInTheDocument();
 	});
 
-	// Check redirecting the user to the correct details page
 	it("Check the routing of the user", () => {
 		render(<CharacterComponent character={mockCharacter} />);
 		const characterCard = screen.getByRole("link");
