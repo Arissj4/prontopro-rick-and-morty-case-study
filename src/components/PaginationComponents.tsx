@@ -36,7 +36,7 @@ export default function Pagination<T>({
 	return (
 		<div className="flex justify-center w-full">
 			<button className="pagination-button" onClick={() => getMoreData()}>
-				laod more
+				load more
 			</button>
 		</div>
 	);
