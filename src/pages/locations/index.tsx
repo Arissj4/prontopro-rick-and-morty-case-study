@@ -28,7 +28,10 @@ export default function Locations({
 	});
 
 	const handleFilters = async () => {
-		const res = await getAdvancedFilters<RMLocation>(filters, "https://rickandmortyapi.com/api/location");
+		const res = await getAdvancedFilters<RMLocation>(
+			filters,
+			"https://rickandmortyapi.com/api/location"
+		);
 		setFilters(res);
 	};
 

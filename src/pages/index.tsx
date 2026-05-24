@@ -26,7 +26,10 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 	});
 
 	const handleFilters = async () => {
-		const res = await getAdvancedFilters<RMCharacter>(filters, "https://rickandmortyapi.com/api/character");
+		const res = await getAdvancedFilters<RMCharacter>(
+			filters,
+			"https://rickandmortyapi.com/api/character"
+		);
 		setFilters(res);
 	};
 
