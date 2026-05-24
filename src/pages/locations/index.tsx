@@ -6,6 +6,7 @@ import { GetServerSideProps } from "next";
 import Filter from "@/components/FilterComponent";
 import Pagination from "@/components/PaginationComponents";
 import SimpleCardComponent from "@/components/SimpleCardComponent";
+import getAdvancedFilters from "@/lib/getAdvancedFilters";
 
 type LocationsProps = {
 	initCharacters: RMLocation[];
@@ -26,22 +27,9 @@ export default function Locations({
 		dimension: new Set(),
 	});
 
-	const getFilters = async () => {
-		let url: string | null = "https://rickandmortyapi.com/api/location";
-
-		while (url) {
-			const res: Response = await fetch(url);
-			const data = await res.json();
-
-			data.results.forEach((element: RMLocation) => {
-				["type", "dimension"].forEach((filter) => {
-					filters[filter].add(element[filter as keyof RMLocation] as string);
-				});
-			});
-
-			url = data.info.next;
-		}
-		setFilters(filters);
+	const handleFilters = async () => {
+		const res = await getAdvancedFilters<RMLocation>(filters, "https://rickandmortyapi.com/api/location");
+		setFilters(res);
 	};
 
 	return (
@@ -74,7 +62,7 @@ export default function Locations({
 					setIsLoading={setIsLoading}
 					advancedButton={true}
 					filters={filters}
-					getFilter={getFilters}
+					handleFilters={handleFilters}
 					setIsError={setIsError}
 				/>
 

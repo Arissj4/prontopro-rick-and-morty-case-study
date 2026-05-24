@@ -12,7 +12,7 @@ type FilterProps<T> = {
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	advancedButton: boolean;
 	filters?: Record<string, Set<string>>;
-	getFilter?: () => void;
+	handleFilters?: () => void;
 	setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -24,7 +24,7 @@ export default function Filter<T>({
 	setIsLoading,
 	advancedButton,
 	filters,
-	getFilter,
+	handleFilters,
 	setIsError,
 }: FilterProps<T>) {
 	const [filterDialogVisible, setFilterDialogVisible] =
@@ -128,7 +128,7 @@ export default function Filter<T>({
 					<button
 						className="filter-button h-14 p-4"
 						onClick={async () => {
-							if (getFilter) await getFilter();
+							if (handleFilters) await handleFilters();
 							setFilterDialogVisible(true);
 						}}
 					>

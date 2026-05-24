@@ -6,6 +6,7 @@ import CharacterComponent from "@/components/CharacterComponent";
 import Pagination from "@/components/PaginationComponents";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
+import getAdvancedFilters from "@/lib/getAdvancedFilters";
 
 type HomeProps = {
 	initCharacters: RMCharacter[];
@@ -24,22 +25,9 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 		status: new Set(),
 	});
 
-	const getFilters = async () => {
-		let url: string | null = "https://rickandmortyapi.com/api/character";
-
-		while (url) {
-			const res: Response = await fetch(url);
-			const data = await res.json();
-
-			data.results.forEach((element: RMCharacter) => {
-				["species", "gender", "status"].forEach((filter) => {
-					filters[filter].add(element[filter as keyof RMCharacter] as string);
-				});
-			});
-
-			url = data.info.next;
-		}
-		setFilters(filters);
+	const handleFilters = async () => {
+		const res = await getAdvancedFilters<RMCharacter>(filters, "https://rickandmortyapi.com/api/character");
+		setFilters(res);
 	};
 
 	return (
@@ -77,7 +65,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 					setIsLoading={setIsLoading}
 					advancedButton={true}
 					filters={filters}
-					getFilter={getFilters}
+					handleFilters={handleFilters}
 					setIsError={setIsError}
 				/>
 
