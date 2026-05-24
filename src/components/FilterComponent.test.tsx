@@ -83,4 +83,34 @@ describe("Checks Filter component behavior", () => {
 		expect(setNextPage).toHaveBeenCalledWith("next-page-url");
 		expect(setIsLoading).toHaveBeenCalledWith(false);
 	});
+
+	it("shows advanced filters button when advancedButton is true", () => {
+		render(
+			<Filter
+				initURL="https://rickandmortyapi.com/api/character"
+				setData={setData}
+				setNextPage={setNextPage}
+				setIsLoading={setIsLoading}
+				setIsError={setIsError}
+				advancedButton={true}
+			/>
+		);
+
+		expect(screen.getByText("advanced filters")).toBeInTheDocument();
+	});
+
+	it("does not show advanced filters button when advancedButton is false", () => {
+		render(
+			<Filter
+				initURL="https://rickandmortyapi.com/api/character"
+				setData={setData}
+				setNextPage={setNextPage}
+				setIsLoading={setIsLoading}
+				setIsError={setIsError}
+				advancedButton={false}
+			/>
+		);
+
+		expect(screen.queryByText("advanced filters")).not.toBeInTheDocument();
+	});
 });
