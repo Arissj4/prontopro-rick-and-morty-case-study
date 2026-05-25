@@ -64,7 +64,7 @@ export default function Episodes({
 							/>
 						))
 					) : (
-						<div className="text-[18px] font-medium">No Locations found.</div>
+						<div className="text-[18px] font-medium">No Episodes found.</div>
 					)}
 				</section>
 
