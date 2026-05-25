@@ -58,43 +58,41 @@ The main UI logic is organized inside reusable components. Shared TypeScript typ
 ## Getting Started
 
 ### 1. Install dependencies
-``` npm install ```
+
+`npm install`
 
 ### 2. Run the development server
-``` npm run dev ```
+
+`npm run dev`
 
 ### Then open:
 
-```txt http://localhost:3000 ```
-
+`txt http://localhost:3000 `
 
 ## Available Scripts
 
 - Run development server
-``` npm run dev ```
-
+  `npm run dev`
 
 - Check formatting
-``` npm run format ```
-
+  `npm run format`
 
 - Run lint
-``` npm run lint ```
-
+  `npm run lint`
 
 - Run type check
-``` npm run type-check ```
-
+  `npm run type-check`
 
 - Run tests
-``` npm test ```
-
+  `npm test`
 
 - Build project
-``` npm run build ```
+  `npm run build`
 
 ## Testing
+
 The project includes beginner-friendly tests for the main UI components, including:
+
 - Character component
 - Filter component
 - Navbar component
@@ -103,10 +101,12 @@ The project includes beginner-friendly tests for the main UI components, includi
 
 Tests are written with **Jest** and **React Testing Library**.
 
-``` npm test ```
+`npm test`
 
 ## CI
+
 The project includes a GitHub Actions workflow that runs:
+
 - Formatting check
 - Lint
 - Type check
@@ -116,10 +116,12 @@ The project includes a GitHub Actions workflow that runs:
 This helps make sure the project is stable before submission.
 
 ## API
+
 This project uses the public Rick and Morty API:
-``` https://rickandmortyapi.com/api ```
+`https://rickandmortyapi.com/api`
 
 Main resources used:
+
 ```
 /character
 /location
@@ -127,6 +129,7 @@ Main resources used:
 ```
 
 ## Notes
+
 The application focuses on clean component structure, readable TypeScript code, reusable logic, and simple but useful tests.
 
 Some logic, such as advanced filter generation, was extracted into helper functions to keep page files easier to read and maintain.
