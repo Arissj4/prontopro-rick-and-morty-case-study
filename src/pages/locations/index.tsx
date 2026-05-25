@@ -27,6 +27,7 @@ export default function Locations({
 		dimension: new Set(),
 	});
 
+	// Loads available advanced filter options when the user clicks on the advanced filters button
 	const handleFilters = async () => {
 		const res = await getAdvancedFilters<RMLocation>(
 			filters,

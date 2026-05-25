@@ -20,6 +20,7 @@ export default function Pagination<T>({
 			setIsLoading(true);
 			document.body.style.overflow = "hidden";
 
+			// Fetch the next page and append the new results to the current list.
 			const res = await fetch(nextPage);
 			const data = await res.json();
 			setData((prevCharacters) => [...prevCharacters, ...data.results]);

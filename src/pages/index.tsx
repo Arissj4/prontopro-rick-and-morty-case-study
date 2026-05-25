@@ -25,6 +25,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 		status: new Set(),
 	});
 
+	// Loads available advanced filter options when the user clicks on the advanced filters button
 	const handleFilters = async () => {
 		const res = await getAdvancedFilters<RMCharacter>(
 			filters,
