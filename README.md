@@ -41,7 +41,7 @@ src
 ├── pages
 │   ├── episodes
 │   ├── locations
-│   ├── profil
+│   ├── profile
 │   ├── _app.tsx
 │   ├── _document.tsx
 │   └── index.tsx
@@ -67,7 +67,7 @@ The main UI logic is organized inside reusable components. Shared TypeScript typ
 
 ### Then open:
 
-`txt http://localhost:3000 `
+`http://localhost:3000`
 
 ## Available Scripts
 
