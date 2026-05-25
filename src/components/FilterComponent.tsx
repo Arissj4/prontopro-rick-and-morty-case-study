@@ -34,27 +34,31 @@ export default function Filter<T>({
 	>({});
 	const [filterName, setFilterName] = useState<string>();
 
+	// Detects episode searches like S, S01, or S01E01 so they use the episode query parameter.
+	const isEpisodeSearch = (value: string) => {
+		return /^s\d{0,2}(e\d{0,2})?$/i.test(value.trim());
+	};
+
+	// Builds the API URL from the search text and selected filters, then updates the displayed data.
 	const filterData = async (searchedName: string | undefined) => {
 		try {
 			setIsLoading(true);
 			setFilterName(searchedName);
 			document.body.style.overflow = "hidden";
 
-			let url: string = "";
+			let url: string = `${initURL}/`;
 
-			if (initURL.includes("/episode")) {
-				const isEpisodeCode = searchedName
-					? /^s\d{2}e\d{2}$/i.test(searchedName)
-					: null;
-				const params = new URLSearchParams();
-				if (searchedName) {
-					if (isEpisodeCode) params.set("episode", searchedName.toUpperCase());
-					else params.set("name", searchedName.toLowerCase());
+			// Episode pages support searching by name or episode code.
+			if (initURL.includes("/episode") && searchedName) {
+				// Detects episode codes like S01E01 so they can be sent with the episode query parameter.
+				if (searchedName && isEpisodeSearch(searchedName)) {
+					url = `${initURL}/?episode=${searchedName.toUpperCase()}`;
+				} else if (searchedName) {
+					url = `${initURL}/?name=${searchedName.toLowerCase()}`;
 				}
-				url = `${initURL}/?${params.toString()}`;
-			} else {
-				url = `${initURL}/`;
-				if (searchedName) url += `?name=${searchedName.toLowerCase()}`;
+			} else if (searchedName) {
+				url += `?name=${searchedName.toLowerCase()}`;
+				// Add selected advanced filters to the request URL.
 				Object.entries(selectedFilters).forEach(([key, value]) => {
 					if (value) url += `&${key}=${value}`;
 				});
@@ -153,6 +157,7 @@ type FilterDialogProps = {
 	filterName: string | undefined;
 };
 
+// Renders the advanced filter modal and keeps the selected filter values.
 export function FilterDialog({
 	isVisible,
 	setVisible,
