@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image from "next/image";
-import RM from "@/public/R&M.svg";
 import type { RMEpisode } from "@/lib/costumeTypes";
 import { GetServerSideProps } from "next";
 import Filter from "@/components/FilterComponent";
@@ -42,7 +41,7 @@ export default function Episodes({
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src={RM} alt="Rick and Morty Logo" />
+				<Image src="/R&M.svg" width={500} height={200} alt="Rick and Morty Logo" />
 
 				<Filter<RMEpisode>
 					searchPlaceholder="Name or episode (ex.S01E01)..."

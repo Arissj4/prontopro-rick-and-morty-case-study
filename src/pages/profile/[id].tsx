@@ -2,8 +2,6 @@ import { RMCharacter, RMEpisode } from "@/lib/costumeTypes";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Back from "@/public/back.svg";
-import Right from "@/public/right.svg";
 
 type ProfileProps = {
 	data: RMCharacter;
@@ -19,7 +17,7 @@ export default function Profile({ data, episodesData }: ProfileProps) {
 			<div className="p-4">
 				<div>
 					<Link className="flex hover:cursor-pointer" href={"/"}>
-						<Image src={Back} alt="Go back" width={24} height={24} />
+						<Image src="/back.svg" alt="Go back" width={24} height={24} />
 						<span className="ml-2">Go Back</span>
 					</Link>
 				</div>
@@ -103,7 +101,7 @@ export default function Profile({ data, episodesData }: ProfileProps) {
 							</div>
 							<Image
 								className="flex"
-								src={Right}
+								src="/right.svg"
 								alt="forward"
 								width={24}
 								height={24}
@@ -136,7 +134,7 @@ export default function Profile({ data, episodesData }: ProfileProps) {
 									</div>
 									<Image
 										className="flex"
-										src={Right}
+										src="/right.svg"
 										alt="forward"
 										width={24}
 										height={24}

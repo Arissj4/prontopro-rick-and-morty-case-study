@@ -1,4 +1,3 @@
-import RandMPicture from "@/public/rick-and-morty.svg";
 import Image from "next/image";
 import Filter from "@/components/FilterComponent";
 import type { RMCharacter } from "@/lib/costumeTypes";
@@ -56,7 +55,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 
 			<div className={`page flex flex-col items-center`}>
 				<Image
-					src={RandMPicture}
+					src="/rick-and-morty.svg"
 					alt="Rick and Morty Logo"
 					width={500}
 					height={200}

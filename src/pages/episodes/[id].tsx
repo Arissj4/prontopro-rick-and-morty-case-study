@@ -2,7 +2,6 @@ import { RMCharacter, RMEpisode } from "@/lib/costumeTypes";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Back from "@/public/back.svg";
 import CharacterComponent from "@/components/CharacterComponent";
 
 type ProfileProps = {
@@ -19,7 +18,7 @@ export default function Profile({ data, charactersData }: ProfileProps) {
 			<div className="p-4">
 				<div>
 					<Link className="flex hover:cursor-pointer" href={"/episodes/"}>
-						<Image src={Back} alt="Go back" width={24} height={24} />
+						<Image src="/back.svg" alt="Go back" width={24} height={24} />
 						<span className="ml-2">Go Back</span>
 					</Link>
 				</div>

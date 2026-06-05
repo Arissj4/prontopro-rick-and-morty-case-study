@@ -1,7 +1,4 @@
 import Image from "next/image";
-import MagnifierIcon from "@/public/magnifier.svg";
-import FilterIcon from "@/public/filter.svg";
-import CloseIcon from "@/public/close.svg";
 import { useState } from "react";
 
 type FilterProps<T> = {
@@ -109,7 +106,7 @@ export default function Filter<T>({
 				<div className="absolute flex w-[104%] -z-10 -right-2 h-full bg-white rounded-md" />
 				<div className="filter-container__input-wrapper">
 					<Image
-						src={MagnifierIcon}
+						src="/magnifier.svg"
 						alt="Magnifying glass icon"
 						width={20}
 						height={20}
@@ -136,7 +133,7 @@ export default function Filter<T>({
 							setFilterDialogVisible(true);
 						}}
 					>
-						<Image src={FilterIcon} alt="Filter icon" width={24} height={24} />
+						<Image src="/filter.svg" alt="Filter icon" width={24} height={24} />
 						<p className="-left-3 text-[16px]">advanced filters</p>
 					</button>
 				)}
@@ -175,7 +172,7 @@ export function FilterDialog({
 				<div className="filter-dialog__header">
 					<p>Filters</p>
 					<button onClick={() => setVisible(false)}>
-						<Image src={CloseIcon} alt="Close icon" width={30} height={30} />
+						<Image src="/close.svg" alt="Close icon" width={30} height={30} />
 					</button>
 				</div>
 

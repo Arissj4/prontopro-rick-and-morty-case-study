@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image from "next/image";
-import RandM from "@/public/RandM.svg";
 import type { RMLocation } from "@/lib/costumeTypes";
 import { GetServerSideProps } from "next";
 import Filter from "@/components/FilterComponent";
@@ -57,7 +56,7 @@ export default function Locations({
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src={RandM} alt="Rick and Morty Logo" />
+				<Image src="/RandM.svg" width={500} height={200} alt="Rick and Morty Logo" />
 
 				<Filter<RMLocation>
 					initURL={"https://rickandmortyapi.com/api/location"}
