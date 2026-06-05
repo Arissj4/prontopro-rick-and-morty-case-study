@@ -41,7 +41,12 @@ export default function Episodes({
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src="/R&M.svg" width={500} height={200} alt="Rick and Morty Logo" />
+				<Image
+					src="/R&M.svg"
+					width={500}
+					height={200}
+					alt="Rick and Morty Logo"
+				/>
 
 				<Filter<RMEpisode>
 					searchPlaceholder="Name or episode (ex.S01E01)..."

@@ -56,7 +56,12 @@ export default function Locations({
 			)}
 
 			<div className={`page flex flex-col items-center`}>
-				<Image src="/RandM.svg" width={500} height={200} alt="Rick and Morty Logo" />
+				<Image
+					src="/RandM.svg"
+					width={500}
+					height={200}
+					alt="Rick and Morty Logo"
+				/>
 
 				<Filter<RMLocation>
 					initURL={"https://rickandmortyapi.com/api/location"}
