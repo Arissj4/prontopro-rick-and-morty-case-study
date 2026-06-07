@@ -1,29 +1,23 @@
 import Image from "next/image";
 import { useState } from "react";
 
-type FilterProps<T> = {
+type FilterProps = {
 	searchPlaceholder?: string;
 	initURL: string;
-	setData: React.Dispatch<React.SetStateAction<T[]>>;
-	setNextPage: React.Dispatch<React.SetStateAction<string | null>>;
-	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	onFetch: (url: string) => void;
 	advancedButton: boolean;
 	filters?: Record<string, Set<string>>;
 	handleFilters?: () => void;
-	setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Filter<T>({
+export default function Filter({
 	searchPlaceholder,
 	initURL,
-	setData,
-	setNextPage,
-	setIsLoading,
+	onFetch,
 	advancedButton,
 	filters,
 	handleFilters,
-	setIsError,
-}: FilterProps<T>) {
+}: FilterProps) {
 	const [filterDialogVisible, setFilterDialogVisible] =
 		useState<boolean>(false);
 	const [selectedFilters, setSelectedFilters] = useState<
@@ -37,58 +31,43 @@ export default function Filter<T>({
 	};
 
 	// Builds the API URL from the search text and selected filters, then updates the displayed data.
-	const filterData = async (searchedName: string | undefined) => {
-		try {
-			setIsLoading(true);
-			setFilterName(searchedName);
-			document.body.style.overflow = "hidden";
-
-			let url: string = `${initURL}/`;
-
-			// Episode pages support searching by name or episode code.
-			if (initURL.includes("/episode") && searchedName) {
-				// Detects episode codes like S01E01 so they can be sent with the episode query parameter.
-				if (searchedName && isEpisodeSearch(searchedName)) {
-					url = `${initURL}/?episode=${searchedName.toUpperCase()}`;
-				} else if (searchedName) {
-					url = `${initURL}/?name=${searchedName.toLowerCase()}`;
-				}
-			} else if (searchedName) {
-				url += `?name=${searchedName.toLowerCase()}`;
-				// Add selected advanced filters to the request URL.
-				Object.entries(selectedFilters).forEach(([key, value]) => {
-					if (value) url += `&${key}=${value}`;
-				});
+	const buildURL = (
+		searchedName: string | undefined,
+		selected: Record<string, string>
+	) => {
+		if (initURL.includes("/episode") && searchedName) {
+			if (isEpisodeSearch(searchedName)) {
+				return `${initURL}/?episode=${searchedName.toUpperCase()}`;
 			}
-
-			setFilterDialogVisible(false);
-
-			const res = await fetch(url);
-			const data = await res.json();
-			if (data.results) {
-				setData(data.results);
-			} else {
-				setData([]);
-			}
-			if (data.info) {
-				setNextPage(data.info.next);
-			} else {
-				setNextPage(null);
-			}
-		} catch (error) {
-			setIsError(true);
-			const inputElement = document.querySelector(
-				'input[name="name"]'
-			) as HTMLInputElement;
-			if (inputElement) {
-				inputElement.blur();
-			}
-			console.log(error);
-		} finally {
-			setSelectedFilters({});
-			setIsLoading(false);
-			document.body.style.overflow = "";
+			return `${initURL}/?name=${searchedName.toLowerCase()}`;
 		}
+
+		let url = `${initURL}/?`;
+
+		if (searchedName) {
+			url += `name=${searchedName.toLowerCase()}`;
+			Object.entries(selected).forEach(([key, value]) => {
+				if (value) url += `&${key}=${value}`;
+			});
+		} else {
+			const filterParams = Object.entries(selected)
+				.filter(([, value]) => value)
+				.map(([key, value]) => `${key}=${value}`)
+				.join("&");
+			url += filterParams;
+		}
+
+		return url;
+	};
+
+	const filterData = (
+		searchedName: string | undefined,
+		selected: Record<string, string>
+	) => {
+		setFilterName(searchedName);
+		setFilterDialogVisible(false);
+		const url = buildURL(searchedName, selected);
+		onFetch(url);
 	};
 
 	return (
@@ -119,7 +98,7 @@ export default function Filter<T>({
 						}
 						name="name"
 						onChange={(e) => {
-							filterData(e.target.value);
+							filterData(e.target.value, selectedFilters);
 						}}
 						defaultValue={""}
 					/>
@@ -150,7 +129,10 @@ type FilterDialogProps = {
 	setSelectedFilters: React.Dispatch<
 		React.SetStateAction<Record<string, string>>
 	>;
-	filterData: (searchedName: string | undefined) => void;
+	filterData: (
+		searchedName: string | undefined,
+		selected: Record<string, string>
+	) => void;
 	filterName: string | undefined;
 };
 
@@ -206,7 +188,7 @@ export function FilterDialog({
 					<button
 						className="filter-dialog__button filter-button py-1 px-4"
 						onClick={() => {
-							filterData(filterName);
+							filterData(filterName, selectedFilters);
 						}}
 					>
 						<p className="text-[20px]">apply</p>

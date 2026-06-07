@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Filter from "@/components/FilterComponent";
 import type { RMCharacter } from "@/lib/costumeTypes";
+import { usePageData } from "@/lib/usePageData";
 import CharacterComponent from "@/components/CharacterComponent";
 import Pagination from "@/components/PaginationComponents";
 import { GetServerSideProps } from "next";
@@ -13,10 +14,15 @@ type HomeProps = {
 };
 
 const Home = ({ initCharacters, initNextPage }: HomeProps) => {
-	const [characters, setCharacters] = useState<RMCharacter[]>(initCharacters);
-	const [nextPage, setNextPage] = useState<string | null>(initNextPage);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isError, setIsError] = useState<boolean>(false);
+	const {
+		data,
+		nextPage,
+		isLoading,
+		isError,
+		fetchData,
+		getMoreData,
+		clearError,
+	} = usePageData<RMCharacter>(initCharacters, initNextPage);
 
 	const [filters, setFilters] = useState<Record<string, Set<string>>>({
 		species: new Set(),
@@ -44,10 +50,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			{isError && (
 				<div className="fixed z-60 w-md flex flex-col h-full justify-center items-center bg-[#ffffff99] text-black text-[24px] ">
 					An error occurred while fetching data.
-					<button
-						className="pagination-button mt-4"
-						onClick={() => setIsError(false)}
-					>
+					<button className="pagination-button mt-4" onClick={clearError}>
 						Close
 					</button>
 				</div>
@@ -63,18 +66,15 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 
 				<Filter<RMCharacter>
 					initURL={"https://rickandmortyapi.com/api/character"}
-					setData={setCharacters}
-					setNextPage={setNextPage}
-					setIsLoading={setIsLoading}
+					onFetch={fetchData}
 					advancedButton={true}
 					filters={filters}
 					handleFilters={handleFilters}
-					setIsError={setIsError}
 				/>
 
 				<section className="w-full flex flex-col items-center">
-					{characters.length > 0 ? (
-						characters?.map((character) => (
+					{data.length > 0 ? (
+						data?.map((character: RMCharacter) => (
 							<CharacterComponent character={character} key={character.id} />
 						))
 					) : (
@@ -82,14 +82,8 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 					)}
 				</section>
 
-				{characters.length > 0 && nextPage && (
-					<Pagination<RMCharacter>
-						nextPage={nextPage}
-						setData={setCharacters}
-						setNextPage={setNextPage}
-						setIsLoading={setIsLoading}
-						setIsError={setIsError}
-					/>
+				{data.length > 0 && nextPage && (
+					<Pagination onGetMoreData={getMoreData} />
 				)}
 			</div>
 		</>
