@@ -50,7 +50,7 @@ export default function Episodes({
 					alt="Rick and Morty Logo"
 				/>
 
-				<Filter<RMEpisode>
+				<Filter
 					searchPlaceholder="Name or episode (ex.S01E01)..."
 					initURL={"https://rickandmortyapi.com/api/episode"}
 					onFetch={fetchData}

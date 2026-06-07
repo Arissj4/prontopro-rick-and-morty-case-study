@@ -66,7 +66,7 @@ export default function Locations({
 					alt="Rick and Morty Logo"
 				/>
 
-				<Filter<RMLocation>
+				<Filter
 					initURL={"https://rickandmortyapi.com/api/location"}
 					onFetch={fetchData}
 					advancedButton={true}

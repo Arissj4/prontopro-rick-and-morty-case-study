@@ -64,7 +64,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 					height={200}
 				/>
 
-				<Filter<RMCharacter>
+				<Filter
 					initURL={"https://rickandmortyapi.com/api/character"}
 					onFetch={fetchData}
 					advancedButton={true}
