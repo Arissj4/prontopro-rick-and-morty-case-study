@@ -105,14 +105,26 @@ export default function Locations({
 export const getServerSideProps: GetServerSideProps<
 	LocationsProps
 > = async () => {
-	const res = await fetch(`https://rickandmortyapi.com/api/location`);
+	try {
+		const res = await fetch(`https://rickandmortyapi.com/api/location`);
 
-	const data = await res.json();
+		if (!res.ok) {
+			throw new Error(`Failed to fetch characters: ${res.status}`);
+		}
 
-	return {
-		props: {
-			initCharacters: data.results,
-			initNextPage: data.info.next,
-		},
-	};
+		const data = await res.json();
+
+		return {
+			props: {
+				initCharacters: data.results,
+				initNextPage: data.info.next,
+			},
+		};
+	} catch (error) {
+		console.log(`Failed to fetch characters: ${error}`);
+
+		return {
+			props: { initCharacters: [], initNextPage: null },
+		};
+	}
 };
