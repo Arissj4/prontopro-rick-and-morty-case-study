@@ -97,16 +97,28 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-	const res = await fetch(`https://rickandmortyapi.com/api/character`);
+	try {
+		const res = await fetch(`https://rickandmortyapi.com/api/character`);
 
-	const data = await res.json();
+		if (!res.ok) {
+			throw new Error(`Failed to fetch characters: ${res.status}`);
+		}
 
-	return {
-		props: {
-			initCharacters: data.results,
-			initNextPage: data.info.next,
-		},
-	};
+		const data = await res.json();
+
+		return {
+			props: {
+				initCharacters: data.results,
+				initNextPage: data.info.next,
+			},
+		};
+	} catch (error) {
+		console.log(`Failed to fetch characters: ${error}`);
+
+		return {
+			props: { initCharacters: [], initNextPage: null },
+		};
+	}
 };
 
 export default Home;
