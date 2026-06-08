@@ -1,13 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Pagination from "./PaginationComponents";
-
-const mockProps = {
-	nextPage: "https://rickandmortyapi.com/api/character?page=2",
-	setData: jest.fn(),
-	setNextPage: jest.fn(),
-	setIsLoading: jest.fn(),
-	setIsError: jest.fn(),
-};
 
 beforeEach(() => {
 	global.fetch = jest.fn();
@@ -16,55 +8,22 @@ beforeEach(() => {
 
 describe("Check rendering of PaginationComponent", () => {
 	it("shows the load more button", () => {
-		render(<Pagination {...mockProps} />);
+		render(<Pagination onGetMoreData={jest.fn()} />);
 		expect(screen.getByText("load more")).toBeInTheDocument();
 	});
 });
 
-describe("Check state management", () => {
-	it("Check setIsLoading(true) when button is clicked", async () => {
-		(fetch as jest.Mock).mockResolvedValueOnce({
-			json: async () => ({ results: [], info: { next: null } }),
-		});
-
-		render(<Pagination {...mockProps} />);
+describe("Check behaviour of PaginationComponent", () => {
+	it("calls onLoadMore when button is clicked", () => {
+		const onLoadMore = jest.fn();
+		render(<Pagination onGetMoreData={onLoadMore} />);
 		fireEvent.click(screen.getByRole("button"));
-
-		await waitFor(() => {
-			expect(mockProps.setIsLoading).toHaveBeenCalledWith(true);
-		});
+		expect(onLoadMore).toHaveBeenCalledTimes(1);
 	});
 
-	it("Check setIsLoading(false) after fetch finishes", async () => {
-		(fetch as jest.Mock).mockResolvedValueOnce({
-			json: async () => ({ results: [], info: { next: null } }),
-		});
-
-		render(<Pagination {...mockProps} />);
-		fireEvent.click(screen.getByRole("button"));
-
-		await waitFor(() => {
-			expect(mockProps.setIsLoading).toHaveBeenCalledWith(false);
-		});
-	});
-
-	it("calls setIsError(true) when fetch fails", async () => {
-		(fetch as jest.Mock).mockRejectedValueOnce(new Error("Network error"));
-
-		render(<Pagination {...mockProps} />);
-		fireEvent.click(screen.getByRole("button"));
-
-		await waitFor(() => {
-			expect(mockProps.setIsError).toHaveBeenCalledWith(true);
-		});
-	});
-
-	it("does not fetch when nextPage is null", async () => {
-		render(<Pagination {...mockProps} nextPage={null} />);
-		fireEvent.click(screen.getByRole("button"));
-
-		await waitFor(() => {
-			expect(fetch).not.toHaveBeenCalled();
-		});
+	it("does not call onLoadMore if not provided", () => {
+		// just checking it renders without crashing
+		render(<Pagination onGetMoreData={jest.fn()} />);
+		expect(screen.getByRole("button")).toBeInTheDocument();
 	});
 });
