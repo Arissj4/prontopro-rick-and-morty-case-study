@@ -34,11 +34,13 @@ export default function Locations({
 
 	// Loads available advanced filter options when the user clicks on the advanced filters button
 	const handleFilters = async () => {
-		const res = await getAdvancedFilters<RMLocation>(
-			filters,
-			"https://rickandmortyapi.com/api/location"
-		);
-		setFilters(res);
+		const alreadyLoaded = Object.values(filters).some(set => set.size > 0);
+		if (alreadyLoaded) return;
+    const res = await getAdvancedFilters<RMLocation>(
+        filters,
+        "https://rickandmortyapi.com/api/location"
+    );
+    setFilters(res);
 	};
 
 	return (

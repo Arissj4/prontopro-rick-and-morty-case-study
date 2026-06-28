@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type FilterProps = {
 	searchPlaceholder?: string;
@@ -24,6 +24,7 @@ export default function Filter({
 		Record<string, string>
 	>({});
 	const [filterName, setFilterName] = useState<string>();
+	const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	// Detects episode searches like S, S01, or S01E01 so they use the episode query parameter.
 	const isEpisodeSearch = (value: string) => {
@@ -59,6 +60,23 @@ export default function Filter({
 
 		return url;
 	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFilterName(value);
+
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+
+    debounceTimer.current = setTimeout(() => {
+        filterData(value, selectedFilters);
+    }, 400);
+	};
+
+	useEffect(() => {
+    return () => {
+        if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    };
+	}, []);
 
 	const filterData = (
 		searchedName: string | undefined,
@@ -97,9 +115,7 @@ export default function Filter({
 							searchPlaceholder ? searchPlaceholder : "Filter by name..."
 						}
 						name="name"
-						onChange={(e) => {
-							filterData(e.target.value, selectedFilters);
-						}}
+						onChange={handleInputChange}
 						defaultValue={""}
 					/>
 				</div>
