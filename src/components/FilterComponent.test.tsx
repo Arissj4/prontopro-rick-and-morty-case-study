@@ -14,9 +14,11 @@ describe("Checks Filter component behavior", () => {
 			<Filter
 				initURL="https://rickandmortyapi.com/api/character"
 				onFetch={onFetch}
-				advancedButton={false} onParamsChange={function (params: Record<string, string>): void {
+				advancedButton={false}
+				onParamsChange={function (params: Record<string, string>): void {
 					throw new Error("Function not implemented.");
-				} }			/>
+				}}
+			/>
 		);
 
 		expect(
@@ -30,9 +32,11 @@ describe("Checks Filter component behavior", () => {
 				searchPlaceholder="Jest test placeholder"
 				initURL="https://rickandmortyapi.com/api/character"
 				onFetch={onFetch}
-				advancedButton={false} onParamsChange={function (params: Record<string, string>): void {
+				advancedButton={false}
+				onParamsChange={function (params: Record<string, string>): void {
 					throw new Error("Function not implemented.");
-				} }			/>
+				}}
+			/>
 		);
 
 		expect(
@@ -45,9 +49,11 @@ describe("Checks Filter component behavior", () => {
 			<Filter
 				initURL="https://rickandmortyapi.com/api/character"
 				onFetch={onFetch}
-				advancedButton={false} onParamsChange={function (params: Record<string, string>): void {
+				advancedButton={false}
+				onParamsChange={function (params: Record<string, string>): void {
 					throw new Error("Function not implemented.");
-				} }			/>
+				}}
+			/>
 		);
 
 		await userEvent.type(
@@ -67,9 +73,11 @@ describe("Checks Filter component behavior", () => {
 			<Filter
 				initURL="https://rickandmortyapi.com/api/character"
 				onFetch={onFetch}
-				advancedButton={true} onParamsChange={function (params: Record<string, string>): void {
+				advancedButton={true}
+				onParamsChange={function (params: Record<string, string>): void {
 					throw new Error("Function not implemented.");
-				} }			/>
+				}}
+			/>
 		);
 
 		expect(screen.getByText("advanced filters")).toBeInTheDocument();
@@ -80,9 +88,11 @@ describe("Checks Filter component behavior", () => {
 			<Filter
 				initURL="https://rickandmortyapi.com/api/character"
 				onFetch={onFetch}
-				advancedButton={false} onParamsChange={function (params: Record<string, string>): void {
+				advancedButton={false}
+				onParamsChange={function (params: Record<string, string>): void {
 					throw new Error("Function not implemented.");
-				} }			/>
+				}}
+			/>
 		);
 
 		expect(screen.queryByText("advanced filters")).not.toBeInTheDocument();
