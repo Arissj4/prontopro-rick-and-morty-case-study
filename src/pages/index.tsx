@@ -5,7 +5,8 @@ import { usePageData } from "@/lib/usePageData";
 import CharacterComponent from "@/components/CharacterComponent";
 import Pagination from "@/components/PaginationComponents";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import getAdvancedFilters from "@/lib/getAdvancedFilters";
 
 type HomeProps = {
@@ -14,6 +15,8 @@ type HomeProps = {
 };
 
 const Home = ({ initCharacters, initNextPage }: HomeProps) => {
+	const router = useRouter();
+
 	const {
 		data,
 		nextPage,
@@ -23,6 +26,19 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 		getMoreData,
 		clearError,
 	} = usePageData<RMCharacter>(initCharacters, initNextPage);
+
+	useEffect(() => {
+		const { name, ...filterParams } = router.query as Record<string, string>;
+		if (!name && Object.keys(filterParams).length === 0) return;
+
+		let url = `https://rickandmortyapi.com/api/character/?`;
+		if (name) url += `name=${name}`;
+		Object.entries(filterParams).forEach(([key, value]) => {
+			if (value) url += `&${key}=${value}`;
+		});
+
+		fetchData(url);
+	}, [fetchData, router.query]);
 
 	const [filters, setFilters] = useState<Record<string, Set<string>>>({
 		species: new Set(),
@@ -39,6 +55,10 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 			"https://rickandmortyapi.com/api/character"
 		);
 		setFilters(res);
+	};
+
+	const handleParamsChange = (params: Record<string, string>) => {
+		router.push({ pathname: "/", query: params }, undefined, { shallow: true });
 	};
 
 	return (
@@ -69,6 +89,7 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 				<Filter
 					initURL={"https://rickandmortyapi.com/api/character"}
 					onFetch={fetchData}
+					onParamsChange={handleParamsChange}
 					advancedButton={true}
 					filters={filters}
 					handleFilters={handleFilters}

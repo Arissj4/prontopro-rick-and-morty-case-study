@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 
 type FilterProps = {
 	searchPlaceholder?: string;
 	initURL: string;
 	onFetch: (url: string) => void;
+	onParamsChange: (params: Record<string, string>) => void;
 	advancedButton: boolean;
 	filters?: Record<string, Set<string>>;
 	handleFilters?: () => void;
@@ -14,6 +16,7 @@ export default function Filter({
 	searchPlaceholder,
 	initURL,
 	onFetch,
+	onParamsChange,
 	advancedButton,
 	filters,
 	handleFilters,
@@ -25,6 +28,17 @@ export default function Filter({
 	>({});
 	const [filterName, setFilterName] = useState<string>();
 	const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const router = useRouter();
+
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		const { name } = router.query as Record<string, string>;
+		if (name && inputRef.current) {
+			inputRef.current.value = name;
+			setFilterName(name);
+		}
+	}, [router.query]);
 
 	// Detects episode searches like S, S01, or S01E01 so they use the episode query parameter.
 	const isEpisodeSearch = (value: string) => {
@@ -78,6 +92,16 @@ export default function Filter({
 		};
 	}, []);
 
+	// const filterData = (
+	// 	searchedName: string | undefined,
+	// 	selected: Record<string, string>
+	// ) => {
+	// 	setFilterName(searchedName);
+	// 	setFilterDialogVisible(false);
+	// 	const url = buildURL(searchedName, selected);
+	// 	onFetch(url);
+	// };
+
 	const filterData = (
 		searchedName: string | undefined,
 		selected: Record<string, string>
@@ -86,6 +110,14 @@ export default function Filter({
 		setFilterDialogVisible(false);
 		const url = buildURL(searchedName, selected);
 		onFetch(url);
+
+		// Sync state to URL
+		const params: Record<string, string> = {};
+		if (searchedName) params.name = searchedName.toLowerCase();
+		Object.entries(selected).forEach(([key, value]) => {
+			if (value) params[key] = value;
+		});
+		onParamsChange(params);
 	};
 
 	return (
@@ -109,6 +141,7 @@ export default function Filter({
 						height={20}
 					/>
 					<input
+						ref={inputRef}
 						className="filter-container__input"
 						type="text"
 						placeholder={
@@ -116,7 +149,7 @@ export default function Filter({
 						}
 						name="name"
 						onChange={handleInputChange}
-						defaultValue={""}
+						defaultValue={filterName ?? ""}
 					/>
 				</div>
 

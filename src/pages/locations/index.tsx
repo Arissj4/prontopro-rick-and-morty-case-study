@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import type { RMLocation } from "@/lib/costumeTypes";
 import { GetServerSideProps } from "next";
@@ -27,6 +28,21 @@ export default function Locations({
 		clearError,
 	} = usePageData<RMLocation>(initCharacters, initNextPage);
 
+	const router = useRouter();
+
+	useEffect(() => {
+		const { name, ...filterParams } = router.query as Record<string, string>;
+		if (!name && Object.keys(filterParams).length === 0) return;
+
+		let url = `https://rickandmortyapi.com/api/location/?`;
+		if (name) url += `name=${name}`;
+		Object.entries(filterParams).forEach(([key, value]) => {
+			if (value) url += `&${key}=${value}`;
+		});
+
+		fetchData(url);
+	}, [fetchData, router.query]);
+
 	const [filters, setFilters] = useState<Record<string, Set<string>>>({
 		type: new Set(),
 		dimension: new Set(),
@@ -41,6 +57,12 @@ export default function Locations({
 			"https://rickandmortyapi.com/api/location"
 		);
 		setFilters(res);
+	};
+
+	const handleParamsChange = (params: Record<string, string>) => {
+		router.push({ pathname: "/locations", query: params }, undefined, {
+			shallow: true,
+		});
 	};
 
 	return (
@@ -71,6 +93,7 @@ export default function Locations({
 				<Filter
 					initURL={"https://rickandmortyapi.com/api/location"}
 					onFetch={fetchData}
+					onParamsChange={handleParamsChange}
 					advancedButton={true}
 					filters={filters}
 					handleFilters={handleFilters}

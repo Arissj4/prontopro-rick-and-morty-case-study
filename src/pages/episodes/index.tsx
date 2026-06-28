@@ -5,6 +5,8 @@ import Filter from "@/components/FilterComponent";
 import Pagination from "@/components/PaginationComponents";
 import SimpleCardComponent from "@/components/SimpleCardComponent";
 import { usePageData } from "@/lib/usePageData";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 type EpisodesProps = {
 	initCharacters: RMEpisode[];
@@ -24,6 +26,25 @@ export default function Episodes({
 		getMoreData,
 		clearError,
 	} = usePageData<RMEpisode>(initCharacters, initNextPage);
+
+	const router = useRouter();
+
+	useEffect(() => {
+		const { name, episode } = router.query as Record<string, string>;
+		if (!name && !episode) return;
+
+		let url = `https://rickandmortyapi.com/api/episode/?`;
+		if (episode) url += `episode=${episode}`;
+		else if (name) url += `name=${name}`;
+
+		fetchData(url);
+	}, [fetchData, router.query]);
+
+	const handleParamsChange = (params: Record<string, string>) => {
+		router.push({ pathname: "/episodes", query: params }, undefined, {
+			shallow: true,
+		});
+	};
 
 	return (
 		<>
@@ -54,6 +75,7 @@ export default function Episodes({
 					searchPlaceholder="Name or episode (ex.S01E01)..."
 					initURL={"https://rickandmortyapi.com/api/episode"}
 					onFetch={fetchData}
+					onParamsChange={handleParamsChange}
 					advancedButton={false}
 				/>
 
