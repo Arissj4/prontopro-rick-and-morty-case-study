@@ -62,20 +62,20 @@ export default function Filter({
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setFilterName(value);
+		const value = e.target.value;
+		setFilterName(value);
 
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+		if (debounceTimer.current) clearTimeout(debounceTimer.current);
 
-    debounceTimer.current = setTimeout(() => {
-        filterData(value, selectedFilters);
-    }, 400);
+		debounceTimer.current = setTimeout(() => {
+			filterData(value, selectedFilters);
+		}, 400);
 	};
 
 	useEffect(() => {
-    return () => {
-        if (debounceTimer.current) clearTimeout(debounceTimer.current);
-    };
+		return () => {
+			if (debounceTimer.current) clearTimeout(debounceTimer.current);
+		};
 	}, []);
 
 	const filterData = (

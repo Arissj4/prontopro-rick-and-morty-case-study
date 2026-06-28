@@ -32,13 +32,13 @@ const Home = ({ initCharacters, initNextPage }: HomeProps) => {
 
 	// Loads available advanced filter options when the user clicks on the advanced filters button
 	const handleFilters = async () => {
-		const alreadyLoaded = Object.values(filters).some(set => set.size > 0);
+		const alreadyLoaded = Object.values(filters).some((set) => set.size > 0);
 		if (alreadyLoaded) return;
-    const res = await getAdvancedFilters<RMCharacter>(
-        filters,
-        "https://rickandmortyapi.com/api/character"
-    );
-    setFilters(res);
+		const res = await getAdvancedFilters<RMCharacter>(
+			filters,
+			"https://rickandmortyapi.com/api/character"
+		);
+		setFilters(res);
 	};
 
 	return (
